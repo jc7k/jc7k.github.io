@@ -1,0 +1,20 @@
+# Development files
+dev/
+CLAUDE.md
+PLANNING.md
+TASK.md
+
+# Node modules (if added later)
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
