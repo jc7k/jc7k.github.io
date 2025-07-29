@@ -683,6 +683,158 @@ body {
     }
 }
 
+/* Education Section Styling */
+.education-section-header {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #7c3aed;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.education-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f9fafb 100%);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.education-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7c3aed, #a855f7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.education-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.3);
+}
+
+.education-card:hover::before {
+    opacity: 1;
+}
+
+/* Academic Credentials */
+.academic-card {
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+    border-color: rgba(124, 58, 237, 0.2);
+}
+
+.education-institution {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.education-location {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.education-degree {
+    margin-top: 0.75rem;
+}
+
+.degree-type {
+    font-weight: 700;
+    color: #374151;
+    font-size: 1rem;
+}
+
+.degree-field {
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Certification Cards */
+.certification-card {
+    margin-bottom: 0.75rem;
+}
+
+.certification-category {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.certification-period {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.certification-details {
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* Certification Type-Specific Styling */
+.ai-ml {
+    background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.ai-ml::before {
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+}
+
+.professional {
+    background: linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.professional::before {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.technical {
+    background: linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-color: rgba(6, 182, 212, 0.3);
+}
+
+.technical::before {
+    background: linear-gradient(90deg, #06b6d4, #0891b2);
+}
+
+.additional {
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.additional::before {
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.industry {
+    background: linear-gradient(145deg, #fdf2f8 0%, #fce7f3 100%);
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+.industry::before {
+    background: linear-gradient(90deg, #ec4899, #db2777);
+}
+
 /* Focus States */
 .nav-button:focus,
 .progress-dot:focus,
