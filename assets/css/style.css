@@ -33,7 +33,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 2rem 6rem 2rem;
+    padding: 2rem 2rem 8rem 2rem;
 }
 
 /* Professional Cards */
@@ -206,7 +206,7 @@ body {
 
 /* Scrollable Content Container */
 .scrollable-content {
-    max-height: 60vh;
+    max-height: 55vh;
     overflow-y: auto;
     padding-right: 1rem;
     margin-right: -1rem;
@@ -375,7 +375,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .carousel-section {
-        padding: 1rem 1rem 5rem 1rem;
+        padding: 1rem 1rem 7rem 1rem;
     }
     
     .professional-card {
@@ -400,7 +400,7 @@ body {
     
     /* Adjust scrollable content for mobile */
     .scrollable-content {
-        max-height: 45vh;
+        max-height: 40vh;
     }
     
     .scrollable-content::-webkit-scrollbar {
