@@ -7,10 +7,19 @@
 
 /* Global Styles */
 body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
     line-height: 1.6;
     color: #374151;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+}
+
+/* Emoji-specific styling */
+.emoji {
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'EmojiOne Color', 'Android Emoji', 'Twemoji Mozilla', sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* Carousel Container */
@@ -48,6 +57,7 @@ body {
     width: 100%;
     position: relative;
     overflow: hidden;
+    animation: fadeInUp 0.6s ease-out;
 }
 
 .professional-card::before {
@@ -65,6 +75,70 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Section-Specific Themes */
+/* Landing Section - Blue Theme (default) */
+.carousel-section:nth-child(1) .professional-card::before {
+    background: linear-gradient(90deg, #3b82f6, #1e40af, #0891b2);
+}
+
+/* Overview Section - Blue Theme */
+.carousel-section:nth-child(2) .professional-card::before {
+    background: linear-gradient(90deg, #3b82f6, #1e40af, #0891b2);
+}
+
+/* Competencies Section - Teal Theme */
+.carousel-section:nth-child(3) .professional-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 100%);
+}
+.carousel-section:nth-child(3) .professional-card::before {
+    background: linear-gradient(90deg, #0891b2, #0d9488, #059669);
+}
+.carousel-section:nth-child(3) .professional-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(13, 148, 136, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(13, 148, 136, 0.2);
+}
+
+/* Experience Section - Green Theme */
+.carousel-section:nth-child(4) .professional-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f0fdf4 100%);
+}
+.carousel-section:nth-child(4) .professional-card::before {
+    background: linear-gradient(90deg, #059669, #047857, #065f46);
+}
+.carousel-section:nth-child(4) .professional-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(5, 150, 105, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(5, 150, 105, 0.2);
+}
+
+/* Education Section - Purple Theme */
+.carousel-section:nth-child(5) .professional-card {
+    background: linear-gradient(145deg, #ffffff 0%, #faf5ff 100%);
+}
+.carousel-section:nth-child(5) .professional-card::before {
+    background: linear-gradient(90deg, #7c3aed, #6d28d9, #5b21b6);
+}
+.carousel-section:nth-child(5) .professional-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(124, 58, 237, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(124, 58, 237, 0.2);
+}
+
+/* Achievements Section - Gold/Amber Theme */
+.carousel-section:nth-child(6) .professional-card {
+    background: linear-gradient(145deg, #ffffff 0%, #fffbeb 100%);
+}
+.carousel-section:nth-child(6) .professional-card::before {
+    background: linear-gradient(90deg, #f59e0b, #d97706, #b45309);
+}
+.carousel-section:nth-child(6) .professional-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(245, 158, 11, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+/* Connect Section - Blue Theme */
+.carousel-section:nth-child(7) .professional-card::before {
+    background: linear-gradient(90deg, #3b82f6, #1e40af, #0891b2);
 }
 
 /* Navigation */
@@ -408,6 +482,184 @@ body {
     }
 }
 
+/* Keyframe Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* Section-Specific Animations */
+.competency-item {
+    animation: slideInLeft 0.6s ease-out;
+    animation-delay: calc(var(--delay, 0) * 0.1s);
+}
+
+.metric-item {
+    animation: countUp 0.8s ease-out;
+    animation-delay: calc(var(--delay, 0) * 0.2s);
+}
+
+.timeline-item {
+    animation: slideInLeft 0.6s ease-out;
+    animation-delay: calc(var(--delay, 0) * 0.15s);
+}
+
+.contact-item {
+    animation: fadeInUp 0.6s ease-out;
+    animation-delay: calc(var(--delay, 0) * 0.1s);
+}
+
+/* Enhanced Section Theming */
+/* Competencies Section - Teal accents */
+.carousel-section:nth-child(3) .competency-item::before {
+    background: linear-gradient(90deg, #0891b2, #0d9488);
+}
+.carousel-section:nth-child(3) .competency-item:hover {
+    background: linear-gradient(145deg, #e6fffa 0%, #ccfbf1 100%);
+    border-color: rgba(13, 148, 136, 0.3);
+}
+
+/* Experience Section - Green accents */
+.carousel-section:nth-child(4) .timeline-item::before {
+    background: #059669;
+    box-shadow: 0 0 0 3px #dcfce7;
+}
+
+/* Education Section - Purple accents */
+.carousel-section:nth-child(5) .professional-card .bg-blue-50 {
+    background: linear-gradient(145deg, #f3e8ff 0%, #e9d5ff 100%) !important;
+    border-color: rgba(124, 58, 237, 0.2) !important;
+}
+.carousel-section:nth-child(5) .professional-card .bg-green-50 {
+    background: linear-gradient(145deg, #f3e8ff 0%, #e9d5ff 100%) !important;
+    border-color: rgba(124, 58, 237, 0.2) !important;
+}
+.carousel-section:nth-child(5) .professional-card .bg-purple-50 {
+    background: linear-gradient(145deg, #f3e8ff 0%, #e9d5ff 100%) !important;
+    border-color: rgba(124, 58, 237, 0.3) !important;
+}
+
+/* Achievements Section - Gold accents */
+.carousel-section:nth-child(6) .professional-card .bg-blue-50 {
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%) !important;
+    border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.carousel-section:nth-child(6) .professional-card .bg-green-50 {
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%) !important;
+    border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.carousel-section:nth-child(6) .professional-card .bg-purple-50 {
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%) !important;
+    border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.carousel-section:nth-child(6) .professional-card .bg-orange-50 {
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%) !important;
+    border-color: rgba(245, 158, 11, 0.4) !important;
+}
+.carousel-section:nth-child(6) .professional-card .bg-red-50 {
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%) !important;
+    border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.carousel-section:nth-child(6) .professional-card .bg-yellow-50 {
+    background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%) !important;
+    border-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+/* Interactive Enhancements */
+.section-title {
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #0891b2);
+    transition: width 0.8s ease-out;
+    transition-delay: 0.5s;
+}
+
+.carousel-section.active .section-title::after {
+    width: 60px;
+}
+
+/* Hover Effects with Shimmer */
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+}
+
+.nav-button:hover::before {
+    opacity: 1;
+    animation: shimmer 1s ease-in-out;
+}
+
+/* Pulse Animation for Key Metrics */
+.metric-number {
+    animation: pulse 2s infinite;
+    animation-delay: 1s;
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
     .carousel-wrapper,
@@ -415,8 +667,19 @@ body {
     .nav-button,
     .progress-dot,
     .competency-item,
-    .contact-item {
+    .contact-item,
+    .timeline-item,
+    .metric-item {
+        animation: none !important;
         transition: none;
+    }
+    
+    .section-title::after {
+        transition: none;
+    }
+    
+    .nav-button::before {
+        animation: none !important;
     }
 }
 

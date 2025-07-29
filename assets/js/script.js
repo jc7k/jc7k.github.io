@@ -35,8 +35,54 @@ document.addEventListener("DOMContentLoaded", function() {
         prevBtn.disabled = currentSection === 0;
         nextBtn.disabled = currentSection === totalSections - 1;
         
+        // Update active section class for animations
+        const sections = document.querySelectorAll('.carousel-section');
+        sections.forEach((section, index) => {
+            section.classList.toggle('active', index === currentSection);
+        });
+        
+        // Trigger animations for current section
+        triggerSectionAnimations(currentSection);
+        
         // Save current position to localStorage
         localStorage.setItem('resumeCurrentSection', currentSection);
+    }
+
+    // Trigger animations for section elements
+    function triggerSectionAnimations(sectionIndex) {
+        const currentSectionEl = document.querySelectorAll('.carousel-section')[sectionIndex];
+        if (!currentSectionEl) return;
+
+        // Add staggered animation delays
+        const competencyItems = currentSectionEl.querySelectorAll('.competency-item');
+        competencyItems.forEach((item, index) => {
+            item.style.setProperty('--delay', index);
+        });
+
+        const metricItems = currentSectionEl.querySelectorAll('.metric-item');
+        metricItems.forEach((item, index) => {
+            item.style.setProperty('--delay', index);
+        });
+
+        const timelineItems = currentSectionEl.querySelectorAll('.timeline-item');
+        timelineItems.forEach((item, index) => {
+            item.style.setProperty('--delay', index);
+        });
+
+        const contactItems = currentSectionEl.querySelectorAll('.contact-item');
+        contactItems.forEach((item, index) => {
+            item.style.setProperty('--delay', index);
+        });
+
+        // Trigger pulse animation for metrics after a delay
+        setTimeout(() => {
+            const metricNumbers = currentSectionEl.querySelectorAll('.metric-number');
+            metricNumbers.forEach(number => {
+                number.style.animation = 'none';
+                number.offsetHeight; // Trigger reflow
+                number.style.animation = 'pulse 2s infinite';
+            });
+        }, 800);
     }
 
     // Go to specific section
