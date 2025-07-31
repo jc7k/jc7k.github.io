@@ -1,0 +1,280 @@
+{
+  "personal": {
+    "name": "Jeff Chen",
+    "title": "AI Product Leader & Technical Strategist",
+    "contact": {
+      "description": "Available via professional networks",
+      "linkedin": "https://www.linkedin.com/in/jeffchen",
+      "github": "https://github.com/jc7k"
+    }
+  },
+  "overview": {
+    "metrics": [
+      {
+        "number": "12+",
+        "label": "Years Experience"
+      },
+      {
+        "number": "96%",
+        "label": "Cost Reduction"
+      },
+      {
+        "number": "71%",
+        "label": "Time Savings"
+      }
+    ],
+    "description": [
+      "Senior Product Manager with 12+ years in education technology and emerging tech, delivering transformative AI/ML business results including 96% cost reduction and 71% operational efficiency gains.",
+      "Proven track record securing millions in strategic partnerships with NVIDIA, Microsoft, Intel, and AMD while leading cross-functional teams from product concept through production deployment.",
+      "Expert at translating emerging AI technologies into scalable products that maximize ROI and drive market expansion."
+    ]
+  },
+  "competencies": [
+    {
+      "emoji": "🎯",
+      "title": "Product Management & Strategy",
+      "description": "Product roadmap development, lifecycle management, go-to-market strategy, market expansion, cross-functional team leadership, stakeholder management"
+    },
+    {
+      "emoji": "🤖",
+      "title": "AI/ML Product Development",
+      "description": "Machine learning productization, LLMs, Generative AI, Agentic AI systems, MLOps, RAG pipelines, edge compute AI"
+    },
+    {
+      "emoji": "⚡",
+      "title": "Technical Leadership",
+      "description": "Agile methodology, software development lifecycle, technical documentation, process improvement, international coordination"
+    },
+    {
+      "emoji": "🤝",
+      "title": "Strategic Partnerships",
+      "description": "Business development, market development funds, vendor management, alliance strategy, partnership negotiations"
+    },
+    {
+      "emoji": "📊",
+      "title": "Data-Driven Decision Making",
+      "description": "Business intelligence, competitive analysis, market research, performance metrics, ROI optimization"
+    },
+    {
+      "emoji": "🎓",
+      "title": "Education Technology",
+      "description": "EdTech solutions, curriculum development, learning analytics, academic partnerships, institutional sales"
+    }
+  ],
+  "experience": [
+    {
+      "company": "HP Inc, Worldwide Education",
+      "position": "AI Technologist for Education",
+      "period": "June 2023 – June 2025",
+      "location": "San Diego, CA",
+      "achievements": [
+        "Program Impact: Led CEO-sponsored NETA AI automation program from concept to production, achieving 96% cost savings and 71% time reduction",
+        "Technical Development: Co-developed scalable AI workflows using CrewAI, LangChain, and Agentic RAG frameworks",
+        "Strategic Partnerships: Secured millions in Market Development Funds through partnerships with AMD, Intel, NVIDIA, and Microsoft",
+        "Research Leadership: Established partnerships with Columbia, Yale, Jackson State, and Florida International University"
+      ]
+    },
+    {
+      "company": "HP Inc, Worldwide Education",
+      "position": "Head of Higher Education Solutions",
+      "period": "March 2021 – June 2023",
+      "location": "San Diego, CA",
+      "achievements": [
+        "Portfolio Transformation: Successfully transitioned HP portfolio focus from XR to AI strategic priority",
+        "Organizational Leadership: Led cross-functional teams through major organizational transformation",
+        "Market Expansion: Directed Future of Work Academy and other market expansion initiatives"
+      ]
+    },
+    {
+      "company": "Marison Group",
+      "position": "Senior Project Manager",
+      "period": "August 2016 – March 2021",
+      "location": "San Diego, CA",
+      "achievements": [
+        "China K12 Platform: Led program management for HP Inc go-to-market strategy in China education segment",
+        "NVIDIA Partnership: Created and launched strategic NVIDIA-funded higher education data science program",
+        "Technical Integration: Managed Alibaba and Intel partnership for education notebooks"
+      ]
+    },
+    {
+      "company": "ESET North America",
+      "position": "Director, Solutions Marketing",
+      "period": "April 2015 – June 2016",
+      "location": "San Diego, CA",
+      "achievements": [
+        "Revenue Growth: Achieved 7.7% revenue growth compared to 2.6% endpoint security market growth, driving company growth of over 3X during tenure",
+        "Product Portfolio: Led portfolio expansion from single product to over two dozen B2B and B2C solutions including mobile, endpoint, server, and MSP offerings",
+        "Market Intelligence: Applied competitive intelligence and business intelligence analysis to identify opportunities and increase performance across multiple market segments",
+        "Analyst Relations: Managed key analyst relationships with Forrester, IDC, Radicati Group, and Frost & Sullivan, securing Top Player recognition"
+      ]
+    },
+    {
+      "company": "ESET North America",
+      "position": "Director, Product Marketing",
+      "period": "May 2012 – March 2015",
+      "location": "San Diego, CA",
+      "achievements": [
+        "Product Launch: Orchestrated launch of first B2B Mac product with Ivy League university as first customer, achieving Apple Store launch and Internet Security category exclusivity",
+        "Cross-Functional Leadership: Aligned North American and Slovak engineering teams to deliver market differentiation and improved product quality",
+        "Process Improvement: Initiated processes to increase transparency and accountability of product development lifecycle, improving time-to-market",
+        "International Coordination: Managed business development engagements with international and North American OEM partners"
+      ]
+    },
+    {
+      "company": "ESET North America",
+      "position": "Manager, Product Marketing Team",
+      "period": "March 2009 – May 2012",
+      "location": "San Diego, CA",
+      "achievements": [
+        "Team Leadership: Built and managed product marketing team responsible for market analysis, competitive positioning, and go-to-market strategy execution",
+        "Market Expansion: Led market research and positioning strategies for North American market entry and expansion across consumer and business segments"
+      ]
+    },
+    {
+      "company": "ESET North America",
+      "position": "Product Marketing Manager",
+      "period": "October 2007 – March 2009",
+      "location": "San Diego, CA",
+      "achievements": [
+        "Foundation Role: Established initial product marketing function for North American operations, developing market analysis capabilities and competitive intelligence frameworks"
+      ]
+    }
+  ],
+  "education": {
+    "academic": {
+      "institution": "Carnegie Mellon University",
+      "location": "Pittsburgh, PA",
+      "degrees": [
+        {
+          "type": "Master of Science",
+          "field": "Electrical and Computer Engineering"
+        },
+        {
+          "type": "Bachelor of Science",
+          "field": "Computer Engineering"
+        }
+      ]
+    },
+    "certifications": [
+      {
+        "category": "Advanced AI/ML Specializations",
+        "period": "(2024-2025)",
+        "details": "Multi AI Agent Systems, Agentic RAG, LLM Post-Training, RLHF",
+        "type": "ai-ml"
+      },
+      {
+        "category": "Professional Development",
+        "period": "(2023-2025)",
+        "details": "Claude Code 4, AI Agents for Product Leaders, Project Management with AI",
+        "type": "professional"
+      },
+      {
+        "category": "Technical Foundations",
+        "details": "Neo4j Graph Data Science, Python Development, Azure ML Studio",
+        "type": "technical"
+      },
+      {
+        "category": "Additional Specializations",
+        "details": "TensorFlow Certification, AWS Machine Learning, Google Cloud AI Platform, Docker & Kubernetes, Apache Spark, Data Engineering Fundamentals",
+        "type": "additional"
+      },
+      {
+        "category": "Industry Standards",
+        "details": "Agile Project Management, Scrum Master Certification, Product Management Fundamentals, Digital Marketing Analytics",
+        "type": "industry"
+      }
+    ],
+    "summary": {
+      "count": "50+",
+      "description": "Demonstrating commitment to staying current with emerging AI/ML technologies and industry best practices"
+    }
+  },
+  "achievements": [
+    {
+      "emoji": "📈",
+      "title": "Program Scale",
+      "description": "Led technical programs from startup initiatives to multi-million dollar enterprise partnerships across multiple business units",
+      "color": "blue"
+    },
+    {
+      "emoji": "💰",
+      "title": "Financial Impact",
+      "description": "Delivered 96% cost savings and 71% time savings through AI/ML program management, secured millions in strategic funding",
+      "color": "green"
+    },
+    {
+      "emoji": "🚀",
+      "title": "Technical Delivery",
+      "description": "Successfully transitioned complex technology portfolios from prototype to production deployment using agile methodologies",
+      "color": "purple"
+    },
+    {
+      "emoji": "🤝",
+      "title": "Strategic Partnerships",
+      "description": "Secured partnerships with NVIDIA, AMD, Intel, Microsoft generating millions in market development funds",
+      "color": "orange"
+    },
+    {
+      "emoji": "🏆",
+      "title": "Industry Recognition",
+      "description": "EDUCAUSE Review Author and Thought Leader, co-founded HBCU Technology Conference and Future of Work Academy",
+      "color": "red"
+    },
+    {
+      "emoji": "🎯",
+      "title": "Market Growth",
+      "description": "Achieved 7.7% revenue growth compared to 2.6% market growth at ESET, driving company growth of over 3X during tenure",
+      "color": "yellow"
+    }
+  ],
+  "connect": {
+    "title": "Let's Connect",
+    "subtitle": "Ready to discuss AI strategy, product management, or strategic partnerships",
+    "links": [
+      {
+        "emoji": "🔗",
+        "title": "LinkedIn",
+        "subtitle": "Connect professionally",
+        "url": "https://www.linkedin.com/in/jeffchen"
+      },
+      {
+        "emoji": "💻",
+        "title": "GitHub",
+        "subtitle": "View projects",
+        "url": "https://github.com/jc7k"
+      }
+    ],
+    "resumes": [
+      {
+        "emoji": "🤖",
+        "title": "AI Technical Program Manager",
+        "file": "assets/md/Jeff Chen Resume - AI TPM.md"
+      },
+      {
+        "emoji": "💼",
+        "title": "Business Development",
+        "file": "assets/md/Jeff Chen Resume - BD.md"
+      },
+      {
+        "emoji": "📢",
+        "title": "Technology Evangelist",
+        "file": "assets/md/Jeff Chen Resume - Evangelist.md"
+      },
+      {
+        "emoji": "🚀",
+        "title": "Go-to-Market Strategy",
+        "file": "assets/md/Jeff Chen Resume - GTM.md"
+      },
+      {
+        "emoji": "⚡",
+        "title": "Product Management",
+        "file": "assets/md/Jeff Chen Resume - Product Manager.md"
+      },
+      {
+        "emoji": "🎯",
+        "title": "Senior Product Manager",
+        "file": "assets/md/Jeff Chen Resume - SPM.md"
+      }
+    ]
+  }
+}

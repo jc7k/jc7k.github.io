@@ -1,10 +1,45 @@
 document.addEventListener("DOMContentLoaded", function() {
     let currentSection = 0;
-    const totalSections = 7;
+    let totalSections = 7; // Will be updated when data loads
+    let resumeData = null;
     const carouselWrapper = document.getElementById('carouselWrapper');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const progressDots = document.getElementById('progressDots');
+
+    // Load resume data
+    async function loadResumeData() {
+        try {
+            const response = await fetch('assets/data/resume-data.json');
+            resumeData = await response.json();
+            renderResume();
+        } catch (error) {
+            console.error('Failed to load resume data:', error);
+            // Fallback to existing HTML structure
+        }
+    }
+
+    // Render resume sections dynamically
+    function renderResume() {
+        if (!resumeData) return;
+
+        carouselWrapper.innerHTML = `
+            ${renderLandingSection()}
+            ${renderOverviewSection()}
+            ${renderCompetenciesSection()}
+            ${renderExperienceSection()}
+            ${renderEducationSection()}
+            ${renderAchievementsSection()}
+            ${renderConnectSection()}
+        `;
+
+        // Update total sections count
+        totalSections = carouselWrapper.children.length;
+        
+        // Reinitialize progress dots and update carousel with new section count
+        initProgressDots();
+        updateCarousel();
+    }
 
     // Initialize progress dots
     function initProgressDots() {
@@ -32,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         
         // Update navigation buttons
-        prevBtn.disabled = currentSection === 0;
-        nextBtn.disabled = currentSection === totalSections - 1;
+        if (prevBtn) prevBtn.disabled = currentSection === 0;
+        if (nextBtn) nextBtn.disabled = currentSection === totalSections - 1;
         
         // Update active section class for animations
         const sections = document.querySelectorAll('.carousel-section');
@@ -160,9 +195,236 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Render functions for each section
+    function renderLandingSection() {
+        return `
+            <section class="carousel-section">
+                <div class="professional-card text-center">
+                    <h1 class="section-title">${resumeData.personal.name}</h1>
+                    <p class="section-subtitle">${resumeData.personal.title}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mt-8">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2 text-gray-800">Contact Information</h3>
+                            <p class="text-gray-600">${resumeData.personal.contact.description}</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2 text-gray-800">Professional Links</h3>
+                            <p><a href="${resumeData.personal.contact.linkedin}" class="text-blue-600 hover:text-blue-800 transition-colors">LinkedIn Profile</a></p>
+                            <p><a href="${resumeData.personal.contact.github}" class="text-blue-600 hover:text-blue-800 transition-colors">GitHub Portfolio</a></p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+        `;
+    }
+
+    function renderOverviewSection() {
+        return `
+            <section class="carousel-section">
+                <div class="professional-card">
+                    <h2 class="section-title">Professional Overview</h2>
+                    
+                    <div class="metrics-container">
+                        ${resumeData.overview.metrics.map(metric => `
+                            <div class="metric-item">
+                                <span class="metric-number">${metric.number}</span>
+                                <span class="metric-label">${metric.label}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="mt-8 text-lg leading-relaxed">
+                        ${resumeData.overview.description.map(paragraph => `
+                            <p class="mt-4">${paragraph}</p>
+                        `).join('')}
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    function renderCompetenciesSection() {
+        return `
+            <section class="carousel-section">
+                <div class="professional-card">
+                    <h2 class="section-title">Core Competencies</h2>
+                    
+                    <div class="scrollable-content">
+                        <div class="competency-grid">
+                            ${resumeData.competencies.map(competency => `
+                                <div class="competency-item">
+                                    <h3 class="font-semibold text-lg mb-2 flex items-center">
+                                        <span class="mr-2 emoji">${competency.emoji}</span>
+                                        ${competency.title}
+                                    </h3>
+                                    <p class="text-gray-600">${competency.description}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    function renderExperienceSection() {
+        return `
+            <section class="carousel-section">
+                <div class="professional-card">
+                    <h2 class="section-title">Professional Experience</h2>
+                    
+                    <div class="scrollable-content">
+                        <div class="experience-timeline">
+                            ${resumeData.experience.map(job => `
+                                <div class="timeline-item">
+                                    <h3 class="font-bold text-xl mb-2">${job.company}</h3>
+                                    <p class="text-blue-600 font-semibold mb-1">${job.position}</p>
+                                    <p class="text-gray-500 mb-4">${job.period} | ${job.location}</p>
+                                    
+                                    <ul class="space-y-2 text-gray-700">
+                                        ${job.achievements.map(achievement => `
+                                            <li><strong>${achievement.split(':')[0]}:</strong>${achievement.split(':').slice(1).join(':')}</li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    function renderEducationSection() {
+        return `
+            <section class="carousel-section">
+                <div class="professional-card">
+                    <h2 class="section-title">Education & Continuous Learning</h2>
+                    
+                    <div class="scrollable-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="education-section-header">Academic Credentials</h3>
+                                <div class="education-card academic-card">
+                                    <h4 class="education-institution">${resumeData.education.academic.institution}</h4>
+                                    <p class="education-location">${resumeData.education.academic.location}</p>
+                                    <div class="mt-3">
+                                        ${resumeData.education.academic.degrees.map(degree => `
+                                            <p class="education-degree mt-2">
+                                                <span class="degree-type">${degree.type}</span><br>
+                                                <span class="degree-field">${degree.field}</span>
+                                            </p>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="education-section-header">Recent Certifications</h3>
+                                <div class="space-y-3">
+                                    ${resumeData.education.certifications.map(cert => `
+                                        <div class="education-card certification-card ${cert.type}">
+                                            <h4 class="certification-category">${cert.category}</h4>
+                                            ${cert.period ? `<p class="certification-period">${cert.period}</p>` : ''}
+                                            <p class="certification-details">${cert.details}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                
+                                <div class="mt-6 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-200">
+                                    <p class="text-sm font-semibold text-purple-800">
+                                        <span class="text-lg">📚</span> <strong>${resumeData.education.summary.count} Technical Certifications</strong>
+                                    </p>
+                                    <p class="text-sm text-purple-700 mt-1">${resumeData.education.summary.description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    function renderAchievementsSection() {
+        return `
+            <section class="carousel-section">
+                <div class="professional-card">
+                    <h2 class="section-title">Key Achievements</h2>
+                    
+                    <div class="scrollable-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            ${resumeData.achievements.map(achievement => `
+                                <div class="bg-${achievement.color}-50 p-6 rounded-lg border border-${achievement.color}-200">
+                                    <div class="flex items-center mb-3">
+                                        <span class="text-2xl mr-3 emoji">${achievement.emoji}</span>
+                                        <h3 class="font-bold text-lg">${achievement.title}</h3>
+                                    </div>
+                                    <p>${achievement.description}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    function renderConnectSection() {
+        return `
+            <section class="carousel-section">
+                <div class="professional-card text-center">
+                    <h2 class="section-title">${resumeData.connect.title}</h2>
+                    <p class="section-subtitle">${resumeData.connect.subtitle}</p>
+                    
+                    <div class="contact-grid">
+                        ${resumeData.connect.links.map(link => `
+                            <a href="${link.url}" class="contact-item" target="_blank">
+                                <span class="text-2xl emoji">${link.emoji}</span>
+                                <div>
+                                    <div class="font-semibold">${link.title}</div>
+                                    <div class="text-sm opacity-75">${link.subtitle}</div>
+                                </div>
+                            </a>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="font-semibold text-lg mb-4">Resume Versions</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                            ${resumeData.connect.resumes.map(resume => `
+                                <a href="${resume.file}" class="bg-gray-50 p-3 rounded border hover:bg-gray-100 transition-colors">
+                                    <span class="emoji">${resume.emoji}</span> ${resume.title}
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    // Add event listeners to navigation buttons
+    if (prevBtn) {
+        prevBtn.addEventListener('click', window.prevSection);
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', window.nextSection);
+    }
+
     // Initialize the carousel
-    initProgressDots();
-    updateCarousel();
+    loadResumeData().then(() => {
+        // Progress dots and carousel are now updated in renderResume()
+    });
+
+    // Fallback initialization if data loading fails
+    setTimeout(() => {
+        if (!resumeData) {
+            initProgressDots();
+            updateCarousel();
+        }
+    }, 1000);
 
     // Add smooth scroll behavior for any anchor links within sections
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
