@@ -30,13 +30,13 @@ class ModernResumeApp {
             this.navigationStructure = await navResponse.json();
         } catch (error) {
             console.error('Failed to load data:', error);
-            // Fallback to inline data for testing
-            this.loadFallbackData();
+            // Use the existing resume data that we know works
+            this.loadRealData();
         }
     }
 
-    loadFallbackData() {
-        console.log('Using fallback data for testing');
+    loadRealData() {
+        // Use the actual resume data from the project
         this.resumeData = {
             personal: {
                 name: "Jeff Chen",
@@ -54,14 +54,41 @@ class ModernResumeApp {
                     { number: "71%", label: "Time Savings" }
                 ],
                 description: [
-                    "Senior Product Manager with 12+ years in education technology and emerging tech, delivering transformative AI/ML business results."
+                    "Senior Product Manager with 12+ years in education technology and emerging tech, delivering transformative AI/ML business results including 96% cost reduction and 71% operational efficiency gains.",
+                    "Proven track record securing millions in strategic partnerships with NVIDIA, Microsoft, Intel, and AMD while leading cross-functional teams from product concept through production deployment.",
+                    "Expert at translating emerging AI technologies into scalable products that maximize ROI and drive market expansion."
                 ]
             },
             competencies: [
                 {
                     emoji: "🎯",
                     title: "Product Management & Strategy",
-                    description: "Product roadmap development, lifecycle management, go-to-market strategy"
+                    description: "Product roadmap development, lifecycle management, go-to-market strategy, market expansion, cross-functional team leadership, stakeholder management"
+                },
+                {
+                    emoji: "🤖",
+                    title: "AI/ML Product Development",
+                    description: "Machine learning productization, LLMs, Generative AI, Agentic AI systems, MLOps, RAG pipelines, edge compute AI"
+                },
+                {
+                    emoji: "⚡",
+                    title: "Technical Leadership",
+                    description: "Agile methodology, software development lifecycle, technical documentation, process improvement, international coordination"
+                },
+                {
+                    emoji: "🤝",
+                    title: "Strategic Partnerships",
+                    description: "Business development, market development funds, vendor management, alliance strategy, partnership negotiations"
+                },
+                {
+                    emoji: "📊",
+                    title: "Data-Driven Decision Making",
+                    description: "Business intelligence, competitive analysis, market research, performance metrics, ROI optimization"
+                },
+                {
+                    emoji: "🎓",
+                    title: "Education Technology",
+                    description: "EdTech solutions, curriculum development, learning analytics, academic partnerships, institutional sales"
                 }
             ],
             experience: [
@@ -70,7 +97,34 @@ class ModernResumeApp {
                     position: "AI Technologist for Education",
                     period: "June 2023 – June 2025",
                     location: "San Diego, CA",
-                    achievements: ["Led CEO-sponsored NETA AI automation program"]
+                    achievements: [
+                        "Program Impact: Led CEO-sponsored NETA AI automation program from concept to production, achieving 96% cost savings and 71% time reduction",
+                        "Technical Development: Co-developed scalable AI workflows using CrewAI, LangChain, and Agentic RAG frameworks",  
+                        "Strategic Partnerships: Secured millions in Market Development Funds through partnerships with AMD, Intel, NVIDIA, and Microsoft",
+                        "Research Leadership: Established partnerships with Columbia, Yale, Jackson State, and Florida International University"
+                    ]
+                },
+                {
+                    company: "HP Inc, Worldwide Education",
+                    position: "Head of Higher Education Solutions",
+                    period: "March 2021 – June 2023",
+                    location: "San Diego, CA",
+                    achievements: [
+                        "Portfolio Transformation: Successfully transitioned HP portfolio focus from XR to AI strategic priority",
+                        "Organizational Leadership: Led cross-functional teams through major organizational transformation",
+                        "Market Expansion: Directed Future of Work Academy and other market expansion initiatives"
+                    ]
+                },
+                {
+                    company: "Marison Group",
+                    position: "Senior Project Manager",
+                    period: "August 2016 – March 2021",
+                    location: "San Diego, CA",
+                    achievements: [
+                        "China K12 Platform: Led program management for HP Inc go-to-market strategy in China education segment",
+                        "NVIDIA Partnership: Created and launched strategic NVIDIA-funded higher education data science program",
+                        "Technical Integration: Managed Alibaba and Intel partnership for education notebooks"
+                    ]
                 }
             ],
             education: {
@@ -78,39 +132,75 @@ class ModernResumeApp {
                     institution: "Carnegie Mellon University",
                     location: "Pittsburgh, PA",
                     degrees: [
-                        { type: "Master of Science", field: "Electrical and Computer Engineering" }
+                        { type: "Master of Science", field: "Electrical and Computer Engineering" },
+                        { type: "Bachelor of Science", field: "Computer Engineering" }
                     ]
                 },
                 certifications: [
                     {
-                        category: "AI/ML Specializations",
+                        category: "Advanced AI/ML Specializations",
                         period: "(2024-2025)",
-                        details: "Multi AI Agent Systems, Agentic RAG",
+                        details: "Multi AI Agent Systems, Agentic RAG, LLM Post-Training, RLHF",
                         type: "ai-ml"
+                    },
+                    {
+                        category: "Professional Development", 
+                        period: "(2023-2025)",
+                        details: "Claude Code 4, AI Agents for Product Leaders, Project Management with AI",
+                        type: "professional"
+                    },
+                    {
+                        category: "Technical Foundations",
+                        details: "Neo4j Graph Data Science, Python Development, Azure ML Studio",
+                        type: "technical"
                     }
                 ],
                 summary: {
                     count: "50+",
-                    description: "Technical certifications"
+                    description: "Demonstrating commitment to staying current with emerging AI/ML technologies and industry best practices"
                 }
             },
             achievements: [
                 {
                     emoji: "📈",
                     title: "Program Scale",
-                    description: "Led technical programs from startup initiatives to multi-million dollar partnerships",
+                    description: "Led technical programs from startup initiatives to multi-million dollar enterprise partnerships across multiple business units",
                     color: "blue"
+                },
+                {
+                    emoji: "💰",
+                    title: "Financial Impact",
+                    description: "Delivered 96% cost savings and 71% time savings through AI/ML program management, secured millions in strategic funding",
+                    color: "green"
+                },
+                {
+                    emoji: "🚀",
+                    title: "Technical Delivery", 
+                    description: "Successfully transitioned complex technology portfolios from prototype to production deployment using agile methodologies",
+                    color: "purple"
+                },
+                {
+                    emoji: "🤝",
+                    title: "Strategic Partnerships",
+                    description: "Secured partnerships with NVIDIA, AMD, Intel, Microsoft generating millions in market development funds",
+                    color: "orange"
                 }
             ],
             connect: {
                 title: "Let's Connect",
-                subtitle: "Ready to discuss AI strategy and partnerships",
+                subtitle: "Ready to discuss AI strategy, product management, or strategic partnerships",
                 links: [
                     {
                         emoji: "🔗",
                         title: "LinkedIn",
                         subtitle: "Connect professionally",
                         url: "https://www.linkedin.com/in/jeffchen"
+                    },
+                    {
+                        emoji: "💻",
+                        title: "GitHub",
+                        subtitle: "View projects", 
+                        url: "https://github.com/jc7k"
                     }
                 ],
                 resumes: [
@@ -118,6 +208,16 @@ class ModernResumeApp {
                         emoji: "🤖",
                         title: "AI Technical Program Manager",
                         file: "./assets/md/Jeff Chen Resume - AI TPM.md"
+                    },
+                    {
+                        emoji: "💼",
+                        title: "Business Development",
+                        file: "./assets/md/Jeff Chen Resume - BD.md"
+                    },
+                    {
+                        emoji: "📢",
+                        title: "Technology Evangelist", 
+                        file: "./assets/md/Jeff Chen Resume - Evangelist.md"
                     }
                 ]
             }
@@ -125,30 +225,50 @@ class ModernResumeApp {
         
         this.navigationStructure = {
             navigationStructure: {
-                home: { id: "home", title: "Home", icon: "👋", description: "Professional introduction" },
+                home: { 
+                    id: "home", 
+                    title: "Home", 
+                    icon: "👋", 
+                    description: "Professional introduction and contact" 
+                },
                 about: { 
                     id: "about", 
                     title: "About", 
                     icon: "👤", 
-                    description: "Professional overview",
+                    description: "Professional overview and core skills",
                     children: {
-                        overview: { id: "overview", title: "Overview" },
-                        competencies: { id: "competencies", title: "Competencies" }
+                        overview: { id: "overview", title: "Professional Overview" },
+                        competencies: { id: "competencies", title: "Core Competencies" }
                     }
                 },
-                experience: { id: "experience", title: "Experience", icon: "💼", description: "Work history" },
+                experience: { 
+                    id: "experience", 
+                    title: "Experience", 
+                    icon: "💼", 
+                    description: "Career journey and accomplishments" 
+                },
                 education: { 
                     id: "education", 
                     title: "Education", 
                     icon: "🎓", 
-                    description: "Academic background",
+                    description: "Academic background and certifications",
                     children: {
-                        academic: { id: "academic", title: "Academic" },
+                        academic: { id: "academic", title: "Academic Credentials" },
                         certifications: { id: "certifications", title: "Certifications" }
                     }
                 },
-                achievements: { id: "achievements", title: "Achievements", icon: "🏆", description: "Key accomplishments" },
-                connect: { id: "connect", title: "Connect", icon: "🤝", description: "Contact information" }
+                achievements: { 
+                    id: "achievements", 
+                    title: "Achievements", 
+                    icon: "🏆", 
+                    description: "Key accomplishments and recognition" 
+                },
+                connect: { 
+                    id: "connect", 
+                    title: "Connect", 
+                    icon: "🤝", 
+                    description: "Contact information and resources" 
+                }
             }
         };
     }
@@ -167,12 +287,12 @@ class ModernResumeApp {
         
         return `
             <aside class="sidebar">
-                <div class="mb-8">
-                    <h1 class="text-2xl font-bold">${this.resumeData.personal.name}</h1>
-                    <p class="text-sm text-muted-foreground">${this.resumeData.personal.title}</p>
+                <div class="sidebar-header">
+                    <h1>${this.resumeData.personal.name}</h1>
+                    <p>${this.resumeData.personal.title}</p>
                 </div>
                 
-                <nav class="space-y-2">
+                <nav class="nav-section">
                     ${Object.values(nav).map(item => this.renderNavItem(item)).join('')}
                 </nav>
             </aside>
@@ -184,7 +304,7 @@ class ModernResumeApp {
         const hasChildren = item.children && Object.keys(item.children).length > 0;
         
         return `
-            <div class="nav-group">
+            <div>
                 <div class="nav-item ${isActive ? 'active' : ''}" data-route="${item.id}">
                     <span class="nav-item-icon">${item.icon || '📄'}</span>
                     <div class="nav-item-content">
@@ -216,7 +336,7 @@ class ModernResumeApp {
     renderMainContent() {
         return `
             <main class="main-content">
-                <div id="content-area" class="content-section animate-fade-in">
+                <div id="content-area" class="content-section">
                     ${this.renderCurrentContent()}
                 </div>
             </main>
@@ -249,56 +369,42 @@ class ModernResumeApp {
                 <p class="section-subtitle">AI Product Leader & Technical Strategist</p>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div class="bg-card border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">Professional Links</h3>
-                        <div class="space-y-3">
-                            <a href="${this.resumeData.personal.contact.linkedin}" 
-                               class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors"
-                               target="_blank">
-                                <span class="text-xl">🔗</span>
-                                <div>
-                                    <div class="font-medium">LinkedIn</div>
-                                    <div class="text-sm text-muted-foreground">Professional network</div>
-                                </div>
+            <div class="grid grid-2 mb-lg">
+                <div>
+                    <div class="card mb-lg">
+                        <h3 class="card-title">Professional Links</h3>
+                        <div>
+                            <a href="${this.resumeData.personal.contact.linkedin}" class="link" target="_blank">
+                                🔗 LinkedIn Profile
                             </a>
-                            <a href="${this.resumeData.personal.contact.github}" 
-                               class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors"
-                               target="_blank">
-                                <span class="text-xl">💻</span>
-                                <div>
-                                    <div class="font-medium">GitHub</div>
-                                    <div class="text-sm text-muted-foreground">Code portfolio</div>
-                                </div>
+                        </div>
+                        <div class="mt-sm">
+                            <a href="${this.resumeData.personal.contact.github}" class="link" target="_blank">
+                                💻 GitHub Portfolio  
                             </a>
                         </div>
                     </div>
                     
-                    <div class="bg-card border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">Quick Overview</h3>
-                        <p class="text-sm text-muted-foreground">
-                            ${this.resumeData.overview.description[0]}
-                        </p>
+                    <div class="card">
+                        <h3 class="card-title">Quick Overview</h3>
+                        <p class="text-sm">${this.resumeData.overview.description[0]}</p>
                     </div>
                 </div>
                 
-                <div class="space-y-6">
-                    <div class="grid grid-cols-3 gap-4">
+                <div>
+                    <div class="grid grid-3 mb-lg">
                         ${this.resumeData.overview.metrics.map(metric => `
                             <div class="metric-card">
-                                <div class="metric-number">${metric.number}</div>
-                                <div class="metric-label">${metric.label}</div>
+                                <span class="metric-number">${metric.number}</span>
+                                <span class="metric-label">${metric.label}</span>
                             </div>
                         `).join('')}
                     </div>
                     
-                    <div class="bg-card border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">Navigation</h3>
-                        <p class="text-sm text-muted-foreground mb-4">
-                            Explore my professional background using the sidebar navigation.
-                        </p>
-                        <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="card">
+                        <h3 class="card-title">Navigation</h3>
+                        <p class="text-sm mb-md">Explore my professional background using the sidebar navigation.</p>
+                        <div class="grid grid-2 text-sm">
                             <div>👤 About & Skills</div>
                             <div>💼 Work Experience</div>
                             <div>🎓 Education</div>
@@ -315,30 +421,25 @@ class ModernResumeApp {
             return this.renderCompetencies();
         }
         
-        // Default to overview
         return `
             <div class="section-header">
                 <h1 class="section-title">Professional Overview</h1>
                 <p class="section-subtitle">Experience and expertise summary</p>
             </div>
             
-            <div class="space-y-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    ${this.resumeData.overview.metrics.map(metric => `
-                        <div class="metric-card">
-                            <div class="metric-number">${metric.number}</div>
-                            <div class="metric-label">${metric.label}</div>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div class="bg-card border border-border rounded-lg p-6">
-                    <div class="space-y-4">
-                        ${this.resumeData.overview.description.map(paragraph => `
-                            <p class="text-muted-foreground leading-relaxed">${paragraph}</p>
-                        `).join('')}
+            <div class="grid grid-3 mb-lg">
+                ${this.resumeData.overview.metrics.map(metric => `
+                    <div class="metric-card">
+                        <span class="metric-number">${metric.number}</span>
+                        <span class="metric-label">${metric.label}</span>
                     </div>
-                </div>
+                `).join('')}
+            </div>
+            
+            <div class="card">
+                ${this.resumeData.overview.description.map(paragraph => `
+                    <p class="mb-md">${paragraph}</p>
+                `).join('')}
             </div>
         `;
     }
@@ -350,10 +451,10 @@ class ModernResumeApp {
                 <p class="section-subtitle">Technical and business expertise</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-2">
                 ${this.resumeData.competencies.map(competency => `
-                    <div class="competency-card">
-                        <div class="flex items-center space-x-3 mb-3">
+                    <div class="card competency-card">
+                        <div class="competency-header">
                             <span class="competency-icon">${competency.emoji}</span>
                             <h3 class="competency-title">${competency.title}</h3>
                         </div>
@@ -365,73 +466,30 @@ class ModernResumeApp {
     }
 
     renderExperience() {
-        if (this.currentSubRoute) {
-            return this.renderSpecificExperience(this.currentSubRoute);
-        }
-        
         return `
             <div class="section-header">
                 <h1 class="section-title">Professional Experience</h1>
                 <p class="section-subtitle">Career journey and key accomplishments</p>
             </div>
             
-            <div class="space-y-6">
+            <div class="grid">
                 ${this.resumeData.experience.map(job => `
-                    <div class="experience-card cursor-pointer hover:shadow-lg transition-shadow" 
-                         data-experience="${this.getExperienceId(job)}">
-                        <div class="experience-header">
-                            <h3 class="experience-company">${job.company}</h3>
-                            <p class="experience-position">${job.position}</p>
-                            <p class="experience-period">${job.period} | ${job.location}</p>
+                    <div class="card experience-card">
+                        <div class="card-header">
+                            <h3 class="card-title">${job.company}</h3>
+                            <p class="card-subtitle">${job.position}</p>
+                            <p class="card-meta">${job.period} | ${job.location}</p>
                         </div>
                         <div class="achievement-list">
-                            ${job.achievements.slice(0, 2).map(achievement => `
+                            ${job.achievements.map(achievement => `
                                 <div class="achievement-item">
                                     <div class="achievement-bullet"></div>
-                                    <p class="achievement-text">${achievement}</p>
+                                    <div>${achievement}</div>
                                 </div>
                             `).join('')}
-                            ${job.achievements.length > 2 ? `
-                                <p class="text-sm text-muted-foreground mt-2">
-                                    +${job.achievements.length - 2} more achievements...
-                                </p>
-                            ` : ''}
                         </div>
                     </div>
                 `).join('')}
-            </div>
-        `;
-    }
-
-    renderSpecificExperience(experienceId) {
-        const job = this.resumeData.experience.find(j => this.getExperienceId(j) === experienceId);
-        if (!job) return this.renderExperience();
-        
-        return `
-            <div class="section-header">
-                <button class="text-sm text-muted-foreground hover:text-foreground mb-2" onclick="app.updateSubRoute(null)">
-                    ← Back to all experience
-                </button>
-                <h1 class="section-title">${job.company}</h1>
-                <p class="section-subtitle">${job.position} • ${job.period}</p>
-            </div>
-            
-            <div class="experience-card">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-xl font-semibold">${job.position}</h3>
-                        <span class="text-sm text-muted-foreground">${job.location}</span>
-                    </div>
-                    
-                    <div class="achievement-list">
-                        ${job.achievements.map(achievement => `
-                            <div class="achievement-item">
-                                <div class="achievement-bullet"></div>
-                                <p class="achievement-text">${achievement}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
             </div>
         `;
     }
@@ -447,18 +505,16 @@ class ModernResumeApp {
                 <p class="section-subtitle">Formal education background</p>
             </div>
             
-            <div class="bg-card border border-border rounded-lg p-6">
-                <h3 class="text-xl font-semibold mb-4">${this.resumeData.education.academic.institution}</h3>
-                <p class="text-muted-foreground mb-4">${this.resumeData.education.academic.location}</p>
+            <div class="card">
+                <h3 class="card-title">${this.resumeData.education.academic.institution}</h3>
+                <p class="card-meta mb-lg">${this.resumeData.education.academic.location}</p>
                 
-                <div class="space-y-3">
-                    ${this.resumeData.education.academic.degrees.map(degree => `
-                        <div class="border-l-2 border-primary pl-4">
-                            <h4 class="font-semibold">${degree.type}</h4>
-                            <p class="text-muted-foreground">${degree.field}</p>
-                        </div>
-                    `).join('')}
-                </div>
+                ${this.resumeData.education.academic.degrees.map(degree => `
+                    <div class="mb-md">
+                        <h4 class="font-semibold">${degree.type}</h4>
+                        <p class="text-sm">${degree.field}</p>
+                    </div>
+                `).join('')}
             </div>
         `;
     }
@@ -470,22 +526,22 @@ class ModernResumeApp {
                 <p class="section-subtitle">Continuous learning and skill development</p>
             </div>
             
-            <div class="space-y-6">
+            <div class="grid">
                 ${this.resumeData.education.certifications.map(cert => `
-                    <div class="bg-card border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-2">${cert.category}</h3>
-                        ${cert.period ? `<p class="text-sm text-muted-foreground mb-3">${cert.period}</p>` : ''}
+                    <div class="card">
+                        <h3 class="card-title">${cert.category}</h3>
+                        ${cert.period ? `<p class="card-meta mb-md">${cert.period}</p>` : ''}
                         <p class="text-sm">${cert.details}</p>
                     </div>
                 `).join('')}
-                
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">📚</span>
-                        <div>
-                            <h3 class="font-semibold text-blue-900">${this.resumeData.education.summary.count} Technical Certifications</h3>
-                            <p class="text-sm text-blue-700">${this.resumeData.education.summary.description}</p>
-                        </div>
+            </div>
+            
+            <div class="card mt-lg" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%); border-color: #3b82f6;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-size: 2rem;">📚</span>
+                    <div>
+                        <h3 class="font-bold">${this.resumeData.education.summary.count} Technical Certifications</h3>
+                        <p class="text-sm">${this.resumeData.education.summary.description}</p>
                     </div>
                 </div>
             </div>
@@ -499,14 +555,14 @@ class ModernResumeApp {
                 <p class="section-subtitle">Notable accomplishments and recognition</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-2">
                 ${this.resumeData.achievements.map(achievement => `
-                    <div class="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                        <div class="flex items-center space-x-3 mb-4">
-                            <span class="text-2xl">${achievement.emoji}</span>
-                            <h3 class="text-lg font-semibold">${achievement.title}</h3>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <span style="font-size: 2rem;">${achievement.emoji}</span>
+                            <h3 class="card-title">${achievement.title}</h3>
                         </div>
-                        <p class="text-muted-foreground">${achievement.description}</p>
+                        <p class="text-sm">${achievement.description}</p>
                     </div>
                 `).join('')}
             </div>
@@ -516,51 +572,35 @@ class ModernResumeApp {
     renderConnect() {
         return `
             <div class="section-header">
-                <h1 class="section-title">Let's Connect</h1>
+                <h1 class="section-title">${this.resumeData.connect.title}</h1>
                 <p class="section-subtitle">${this.resumeData.connect.subtitle}</p>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div class="bg-card border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">Professional Networks</h3>
-                        <div class="space-y-3">
-                            ${this.resumeData.connect.links.map(link => `
-                                <a href="${link.url}" 
-                                   class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors"
-                                   target="_blank">
-                                    <span class="text-xl">${link.emoji}</span>
-                                    <div>
-                                        <div class="font-medium">${link.title}</div>
-                                        <div class="text-sm text-muted-foreground">${link.subtitle}</div>
-                                    </div>
-                                </a>
-                            `).join('')}
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="card-title">Professional Networks</h3>
+                    ${this.resumeData.connect.links.map(link => `
+                        <div class="mb-md">
+                            <a href="${link.url}" class="link" target="_blank">
+                                ${link.emoji} ${link.title}
+                            </a>
+                            <p class="text-sm">${link.subtitle}</p>
                         </div>
-                    </div>
+                    `).join('')}
                 </div>
                 
-                <div class="space-y-6">
-                    <div class="bg-card border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">Resume Downloads</h3>
-                        <div class="grid grid-cols-1 gap-2">
-                            ${this.resumeData.connect.resumes.map(resume => `
-                                <a href="${resume.file}" 
-                                   class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors border border-border">
-                                    <span class="text-lg">${resume.emoji}</span>
-                                    <span class="text-sm font-medium">${resume.title}</span>
-                                </a>
-                            `).join('')}
+                <div class="card">
+                    <h3 class="card-title">Resume Downloads</h3>
+                    ${this.resumeData.connect.resumes.map(resume => `
+                        <div class="mb-sm">
+                            <a href="${resume.file}" class="button button-secondary" style="width: 100%; justify-content: flex-start;">
+                                ${resume.emoji} ${resume.title}
+                            </a>
                         </div>
-                    </div>
+                    `).join('')}
                 </div>
             </div>
         `;
-    }
-
-    getExperienceId(job) {
-        return job.company.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + 
-               job.position.toLowerCase().replace(/[^a-z0-9]/g, '-');
     }
 
     setupEventListeners() {
@@ -576,14 +616,6 @@ class ModernResumeApp {
             if (subNavItem) {
                 const subRoute = subNavItem.dataset.subroute;
                 this.updateSubRoute(subRoute);
-                return;
-            }
-            
-            const experienceCard = e.target.closest('[data-experience]');
-            if (experienceCard) {
-                const experienceId = experienceCard.dataset.experience;
-                this.updateRoute('experience');
-                this.updateSubRoute(experienceId);
                 return;
             }
         });
@@ -607,17 +639,22 @@ class ModernResumeApp {
             sidebar.innerHTML = this.renderSidebar().replace('<aside class="sidebar">', '').replace('</aside>', '');
         }
         
-        // Update main content
+        // Update main content  
         const contentArea = document.getElementById('content-area');
         if (contentArea) {
             contentArea.innerHTML = this.renderCurrentContent();
-            contentArea.classList.remove('animate-fade-in');
-            setTimeout(() => contentArea.classList.add('animate-fade-in'), 10);
+            contentArea.className = 'content-section';
         }
     }
 }
 
 // Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Hide loading state
+    const loading = document.getElementById('loading');
+    if (loading) {
+        loading.style.display = 'none';
+    }
+    
     window.app = new ModernResumeApp();
 });
