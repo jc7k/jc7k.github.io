@@ -1,26 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeff Chen - AI Product Leader & Technologist</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>YouTube Feedback Demo (Frontend-only)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    #yt-container { max-width: 800px; margin: 2rem auto; aspect-ratio: 16/9; }
+    #feedbackModal {
+      position: fixed; inset: 0; display: none; place-items: center;
+      background: rgba(0,0,0,0.55); z-index: 9999;
+    }
+    .card {
+      background: #fff; padding: 1rem; max-width: 420px; width: 92%;
+      border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+    .row { margin: .6rem 0; }
+    button { cursor: pointer; }
+    .badge { display:inline-block; padding:.2rem .5rem; border-radius:.5rem; background:#eee; font-size:.8rem; }
+    #toast {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,.8); color: #fff; padding: 8px 12px; border-radius: 6px; display: none;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <!-- Carousel Container -->
-    <div class="carousel-container">
-        <div class="carousel-wrapper" id="carouselWrapper">
-            <!-- Content will be dynamically loaded from resume-data.json -->
+<body>
+  <main style="max-width: 860px; margin: 1rem auto;">
+    <h1 style="margin-bottom: .25rem;">YouTube Feedback Demo</h1>
+    <p style="margin-top: 0; color:#555;">
+      <span class="badge">Frontend-only</span>
+      &nbsp;This PoC pauses at <strong>5s</strong> and <strong>30s</strong> to show a pulse form. No data is sent anywhere.
+    </p>
+  </main>
+
+  <div id="yt-container"></div>
+
+  <!-- Modal -->
+  <div id="feedbackModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="card">
+      <h3 id="modal-title" style="margin-top:0">Quick pulse check</h3>
+      <form id="pulseForm">
+        <p id="cueInfo" style="margin:.25rem 0 .75rem; color:#666;"></p>
+        <div class="row">
+          <label>How helpful is this so far?
+            <select name="helpfulness" required>
+              <option value="">Choose…</option>
+              <option>Very helpful</option>
+              <option>Somewhat helpful</option>
+              <option>Neutral</option>
+              <option>Not very helpful</option>
+              <option>Not helpful at all</option>
+            </select>
+          </label>
         </div>
+        <div class="row">
+          <label>One thing we could improve?
+            <textarea name="comment" rows="3" placeholder="(optional)"></textarea>
+          </label>
+        </div>
+        <div class="row" style="display:flex;gap:.5rem;justify-content:flex-end">
+          <button type="button" id="skipBtn">Skip</button>
+          <button type="submit">Submit</button>
+        </div>
+        <p id="status" style="font-size:.9rem;color:#666;margin:.4rem 0 0;"></p>
+      </form>
     </div>
+  </div>
 
-    <!-- Navigation -->
-    <div class="carousel-nav">
-        <button class="nav-button" id="prevBtn">← Previous</button>
-        <div class="progress-dots" id="progressDots"></div>
-        <button class="nav-button" id="nextBtn">Next →</button>
-    </div>
+  <div id="toast" role="status" aria-live="polite"></div>
 
-    <script src="assets/js/script.js"></script>
+  <!-- YT API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <!-- Config -->
+  <script>
+    const VIDEO_ID   = "JnBy7Af_2e0";  // Google Cloud: Intro to Generative AI
+    const CUES       = [5, 30];        // seconds
+  </script>
+
+  <!-- Controller (no backend) -->
+  <script>
+    let player, pollId=null, lastT=0;
+    const triggered = new Set();
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('yt-container', {
+        videoId: VIDEO_ID,
+        playerVars: { rel: 0, modestbranding: 1 },
+        events: { onReady, onStateChange }
+      });
+    }
+    function onReady() {}
+    function onStateChange(e) {
+      if (e.data === YT.PlayerState.PLAYING) startPolling();
+      else stopPolling();
+    }
+    function startPolling(){
+      if (pollId) return;
+      lastT = player.getCurrentTime();
+      pollId = setInterval(() => {
+        const t = player.getCurrentTime();
+        for (const cue of CUES) {
+          if (!triggered.has(cue) && crossed(lastT, t, cue, 0.5)) {
+            triggered.add(cue);
+            player.pauseVideo();
+            openModal(cue);
+          }
+        }
+        lastT = t;
+      }, 300);
+    }
+    function stopPolling(){ clearInterval(pollId); pollId=null; }
+    function crossed(prev, now, cue, tol){
+      const a = Math.min(prev, now), b = Math.max(prev, now);
+      return (a - tol) < cue && cue <= (b + tol);
+    }
+
+    // Modal logic
+    const modal = document.getElementById('feedbackModal');
+    const form  = document.getElementById('pulseForm');
+    const statusEl = document.getElementById('status');
+    const cueInfo = document.getElementById('cueInfo');
+    const toast = document.getElementById('toast');
+    let currentCue = null;
+
+    function openModal(cue){
+      currentCue = cue;
+      cueInfo.textContent = `Cue @ ${cue.toFixed(0)}s`;
+      statusEl.textContent = "";
+      modal.style.display = 'grid';
+      announce(`Cue reached at ${cue.toFixed(0)} seconds`);
+      console.log("[demo] Showing form at cue:", cue);
+    }
+    function closeModal(){ modal.style.display = 'none'; }
+
+    document.getElementById('skipBtn').onclick = () => {
+      closeModal(); player.playVideo();
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        video_id: VIDEO_ID,
+        at_seconds: currentCue,
+        helpfulness: form.helpfulness.value,
+        comment: form.comment.value || null,
+      };
+      console.log("[demo] Submission (not sent):", data);
+      statusEl.textContent = "Saved locally (demo only). Resuming…";
+      setTimeout(() => { closeModal(); player.playVideo(); }, 400);
+    });
+
+    function announce(msg){
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 1500);
+    }
+  </script>
 </body>
 </html>
