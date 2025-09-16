@@ -545,7 +545,7 @@
   <header>
     <div class="container">
       <div class="logo-container">
-        <img src="http://goldtreeco.com/wp-content/uploads/2024/11/Minimal-Tree-of-Life-Illustrated-Logo-For-Organic-Spices-Brand.png"
+        <img src="https://goldtreeco.com/wp-content/uploads/2024/11/Minimal-Tree-of-Life-Illustrated-Logo-For-Organic-Spices-Brand.png"
              alt="Gold Tree Business Consulting"
              class="logo">
         <span class="logo-text">GoldTreeCo</span>
@@ -628,7 +628,15 @@
   </div>
 
   <!-- YT API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    // Prevent multiple API loads on reload
+    if (!window.YT && !window.onYouTubeIframeAPIReady) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+  </script>
 
   <!-- Config -->
   <script>
@@ -653,11 +661,55 @@
     }
 
     function onYouTubeIframeAPIReady() {
-      player = new YT.Player('yt-container', {
-        videoId: VIDEO_ID,
-        playerVars: { rel: 0, modestbranding: 1 },
-        events: { onReady, onStateChange }
-      });
+      console.log('[demo] YouTube API ready, initializing player...');
+      try {
+        // Clear any existing player
+        if (player && typeof player.destroy === 'function') {
+          player.destroy();
+        }
+
+        player = new YT.Player('yt-container', {
+          videoId: VIDEO_ID,
+          playerVars: {
+            rel: 0,
+            modestbranding: 1,
+            enablejsapi: 1,
+            origin: window.location.origin
+          },
+          events: {
+            onReady: onReady,
+            onStateChange: onStateChange,
+            onError: onPlayerError
+          }
+        });
+      } catch (error) {
+        console.error('[demo] Error initializing YouTube player:', error);
+        // Retry after a short delay
+        setTimeout(() => {
+          console.log('[demo] Retrying player initialization...');
+          onYouTubeIframeAPIReady();
+        }, 2000);
+      }
+    }
+
+    function onPlayerError(event) {
+      console.error('[demo] YouTube player error:', event.data);
+      // Handle common error codes
+      switch(event.data) {
+        case 2:
+          console.error('[demo] Invalid video ID');
+          break;
+        case 5:
+          console.error('[demo] HTML5 player error');
+          break;
+        case 100:
+          console.error('[demo] Video not found');
+          break;
+        case 101:
+        case 150:
+          console.error('[demo] Video not allowed to be played in embedded players');
+          break;
+      }
     }
     function onReady() {
       console.log('[demo] YouTube player ready, opt-out status:', userOptedOut);
