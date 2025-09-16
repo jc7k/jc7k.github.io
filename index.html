@@ -4,6 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>YouTube Feedback Demo (Frontend-only)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -12,9 +13,9 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #ffffff;
-      line-height: 1.6;
+      line-height: 2;
       color: #333;
       overflow-x: hidden;
     }
@@ -29,29 +30,67 @@
       background: #ffffff;
       padding: 2rem 0 3rem;
       text-align: center;
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, #d4af37, #f4d03f);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+    }
+
+    .logo-text {
+      font-family: "Nunito", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #d4af37;
+      letter-spacing: 0.5px;
     }
 
     h1 {
+      font-family: "Nunito", sans-serif;
       font-size: 2.8rem;
-      font-weight: 700;
+      font-weight: 200;
       color: #1a1a1a;
       margin-bottom: 1rem;
-      letter-spacing: -0.02em;
+      letter-spacing: normal;
+      line-height: 1.25;
     }
 
     .subtitle {
-      font-size: 1.2rem;
+      font-family: "Nunito", sans-serif;
+      font-size: 1rem;
       color: #666;
-      font-weight: 300;
+      font-weight: 400;
       max-width: 600px;
       margin: 0 auto;
+      line-height: 2;
     }
 
     .badge {
       display: inline-block;
-      background: #f8f9fa;
-      color: #6c757d;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: #ffffff;
       padding: 0.4rem 1rem;
       border-radius: 20px;
       font-size: 0.85rem;
@@ -59,7 +98,8 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 1rem;
-      border: 1px solid #e9ecef;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
     }
 
     .hero-section {
@@ -80,27 +120,29 @@
     }
 
     .content-text h2 {
-      font-size: 2.2rem;
-      font-weight: 700;
+      font-family: "Nunito", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 400;
       color: #1a1a1a;
       margin-bottom: 1.5rem;
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
     .content-text h2 strong {
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .content-text p {
-      font-size: 1.1rem;
+      font-family: "Nunito", sans-serif;
+      font-size: 1rem;
       color: #555;
       margin-bottom: 1.5rem;
-      line-height: 1.7;
+      line-height: 2;
     }
 
     .content-text em {
       font-style: italic;
-      color: #666;
+      color: #d4af37;
       font-weight: 500;
     }
 
@@ -108,8 +150,21 @@
       background: #ffffff;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-      border: 1px solid #f0f0f0;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1),
+                  0 0 0 1px rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      position: relative;
+    }
+
+    .video-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #d4af37, #f4d03f, #d4af37);
+      z-index: 1;
     }
 
     #yt-container {
@@ -145,12 +200,12 @@
 
     .cta-content h2 em {
       font-style: italic;
-      color: #666;
+      color: #d4af37;
     }
 
     .cta-button {
       display: inline-block;
-      background: #1a1a1a;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
       color: #ffffff;
       padding: 1rem 2.5rem;
       border: none;
@@ -159,14 +214,32 @@
       font-weight: 600;
       text-decoration: none;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
       margin-top: 2rem;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
     }
 
     .cta-button:hover {
-      background: #333;
+      background: linear-gradient(135deg, #b8941f, #d4af37);
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
     }
 
     /* Modal Styles */
@@ -179,12 +252,12 @@
       backdrop-filter: blur(0px);
       z-index: 9999;
       opacity: 0;
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 1.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
     #feedbackModal.show {
       background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
       opacity: 1;
     }
 
@@ -194,9 +267,11 @@
       max-width: 500px;
       width: 92%;
       border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      transform: scale(0.8) translateY(20px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                  0 0 0 1px rgba(212, 175, 55, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      transform: scale(0.75) translateY(30px);
+      transition: all 1.4s cubic-bezier(0.25, 0.1, 0.25, 1);
       opacity: 0;
     }
 
@@ -358,6 +433,12 @@
 <body>
   <header>
     <div class="container">
+      <div class="logo-container">
+        <img src="http://goldtreeco.com/wp-content/uploads/2024/11/Minimal-Tree-of-Life-Illustrated-Logo-For-Organic-Spices-Brand.png"
+             alt="Gold Tree Business Consulting"
+             class="logo">
+        <span class="logo-text">GoldTreeCo</span>
+      </div>
       <span class="badge">Frontend-only Demo</span>
       <h1>YouTube Feedback Demo</h1>
       <p class="subtitle">
@@ -517,7 +598,7 @@
       // Wait for animation to complete before hiding
       setTimeout(() => {
         modal.style.display = 'none';
-      }, 800);
+      }, 1400);
     }
 
     document.getElementById('skipBtn').onclick = () => {
@@ -534,7 +615,7 @@
       };
       console.log("[demo] Submission (not sent):", data);
       statusEl.textContent = "Thank you for your thoughtful feedback. Resuming gently...";
-      setTimeout(() => { closeModal(); player.playVideo(); }, 1200);
+      setTimeout(() => { closeModal(); player.playVideo(); }, 1800);
     });
 
     function announce(msg){
