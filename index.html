@@ -103,12 +103,24 @@
     }
 
     .video-section {
-      padding: 2rem 0;
-      background: #ffffff;
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 50vh;
+      min-height: 60vh;
+    }
+
+    .video-section .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
     }
 
     .content-section {
@@ -150,15 +162,29 @@
     }
 
     .video-container {
-      background: #ffffff;
-      border-radius: 12px;
+      background: #000000;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1),
-                  0 0 0 1px rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.15);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                  0 0 0 2px rgba(212, 175, 55, 0.3);
+      border: 2px solid rgba(212, 175, 55, 0.4);
       position: relative;
-      max-width: 900px;
+      max-width: 1000px;
       width: 100%;
+      animation: videoGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes videoGlow {
+      0% {
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                    0 0 0 2px rgba(212, 175, 55, 0.3),
+                    0 0 30px rgba(212, 175, 55, 0.1);
+      }
+      100% {
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                    0 0 0 2px rgba(212, 175, 55, 0.5),
+                    0 0 60px rgba(212, 175, 55, 0.2);
+      }
     }
 
     .video-container::before {
@@ -524,7 +550,6 @@
              class="logo">
         <span class="logo-text">GoldTreeCo</span>
       </div>
-      <span class="badge">Frontend-only Demo</span>
       <h1>YouTube Feedback Demo</h1>
       <p class="subtitle">
         This proof of concept pauses every <strong>10 seconds</strong> starting at <strong>5s</strong> to show gentle feedback forms.
@@ -615,7 +640,17 @@
   <script>
     let player, pollId=null, lastT=0;
     const triggered = new Set();
-    let userOptedOut = sessionStorage.getItem('pollOptOut') === 'true';
+    let userOptedOut = false;
+
+    // Initialize opt-out state safely
+    try {
+      const storedOptOut = sessionStorage.getItem('pollOptOut');
+      userOptedOut = storedOptOut === 'true';
+      console.log('[demo] Opt-out state initialized:', userOptedOut);
+    } catch (e) {
+      console.log('[demo] SessionStorage not available, opt-out state set to false');
+      userOptedOut = false;
+    }
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-container', {
@@ -625,6 +660,7 @@
       });
     }
     function onReady() {
+      console.log('[demo] YouTube player ready, opt-out status:', userOptedOut);
       // Show opt-out status if user previously opted out
       if (userOptedOut) {
         announce("Feedback polls are disabled for this session");
@@ -636,12 +672,14 @@
     }
     function startPolling(){
       if (pollId) return;
+      console.log('[demo] Starting polling, opt-out status:', userOptedOut);
       lastT = player.getCurrentTime();
       pollId = setInterval(() => {
         const t = player.getCurrentTime();
         for (const cue of CUES) {
           if (!triggered.has(cue) && crossed(lastT, t, cue, 0.5)) {
             triggered.add(cue);
+            console.log(`[demo] Cue triggered at ${cue}s, opt-out status:`, userOptedOut);
 
             // Respect user opt-out preference
             if (userOptedOut) {
@@ -649,6 +687,7 @@
               continue;
             }
 
+            console.log(`[demo] Showing poll at ${cue}s`);
             player.pauseVideo();
             openModal(cue);
           }
