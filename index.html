@@ -102,17 +102,18 @@
       box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
     }
 
-    .hero-section {
-      padding: 4rem 0;
+    .video-section {
+      padding: 2rem 0;
       background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh;
     }
 
-    .content-grid {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3rem;
-      margin-bottom: 4rem;
+    .content-section {
+      padding: 4rem 0;
+      background: #ffffff;
       text-align: center;
     }
 
@@ -532,27 +533,30 @@
     </div>
   </header>
 
-  <section class="hero-section">
+  <section class="video-section">
     <div class="container">
-      <div class="content-grid">
-        <div class="content-text">
-          <h2><strong>Experience Thoughtful</strong> User Engagement</h2>
-          <p>
-            This demo showcases how we can <em>thoughtfully interrupt</em> video content at key moments
-            to gather meaningful feedback without disrupting the viewing experience.
-          </p>
-          <p>
-            The approach prioritizes <strong>user experience</strong> and <em>respectful timing</em>,
-            creating opportunities for engagement that feel natural and purposeful.
-          </p>
-          <p>
-            Watch the video below and experience how gentle prompts can enhance rather than
-            interrupt the content consumption journey.
-          </p>
-        </div>
-        <div class="video-container">
-          <div id="yt-container"></div>
-        </div>
+      <div class="video-container">
+        <div id="yt-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-text">
+        <h2><strong>Experience Thoughtful</strong> User Engagement</h2>
+        <p>
+          This demo showcases how we can <em>thoughtfully interrupt</em> video content at key moments
+          to gather meaningful feedback without disrupting the viewing experience.
+        </p>
+        <p>
+          The approach prioritizes <strong>user experience</strong> and <em>respectful timing</em>,
+          creating opportunities for engagement that feel natural and purposeful.
+        </p>
+        <p>
+          The video above demonstrates how gentle prompts can enhance rather than
+          interrupt the content consumption journey.
+        </p>
       </div>
     </div>
   </section>
