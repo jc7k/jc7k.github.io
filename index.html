@@ -252,7 +252,7 @@
       backdrop-filter: blur(0px);
       z-index: 9999;
       opacity: 0;
-      transition: all 1.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: all 2.1s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
     #feedbackModal.show {
@@ -268,11 +268,93 @@
       width: 92%;
       border-radius: 12px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
-                  0 0 0 1px rgba(212, 175, 55, 0.2);
-      border: 1px solid rgba(212, 175, 55, 0.1);
+                  0 0 0 1px rgba(212, 175, 55, 0.4);
+      border: 2px solid #d4af37;
       transform: scale(0.75) translateY(30px);
-      transition: all 1.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: all 2.1s cubic-bezier(0.25, 0.1, 0.25, 1);
       opacity: 0;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37, #f4d03f);
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0.6;
+      animation: cardBorderShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes cardBorderShimmer {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.9; }
+    }
+
+    /* Golden Ripple Effect */
+    .ripple-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .ripple-container.active {
+      opacity: 1;
+    }
+
+    .ripple {
+      position: absolute;
+      border: 2px solid rgba(212, 175, 55, 0.6);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleExpand 2.5s ease-out;
+    }
+
+    .ripple:nth-child(1) {
+      animation-delay: 0s;
+      border-color: rgba(212, 175, 55, 0.8);
+    }
+
+    .ripple:nth-child(2) {
+      animation-delay: 0.5s;
+      border-color: rgba(244, 208, 63, 0.6);
+    }
+
+    .ripple:nth-child(3) {
+      animation-delay: 1s;
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+
+    @keyframes rippleExpand {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      70% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(120);
+        opacity: 0;
+      }
+    }
+
+    /* Disable ripple on reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .ripple-container {
+        display: none;
+      }
     }
 
     #feedbackModal.show .card {
@@ -520,6 +602,13 @@
 
   <div id="toast" role="status" aria-live="polite"></div>
 
+  <!-- Golden Ripple Effect -->
+  <div class="ripple-container" id="rippleContainer">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+  </div>
+
   <!-- YT API -->
   <script src="https://www.youtube.com/iframe_api"></script>
 
@@ -573,23 +662,71 @@
     const statusEl = document.getElementById('status');
     const cueInfo = document.getElementById('cueInfo');
     const toast = document.getElementById('toast');
+    const rippleContainer = document.getElementById('rippleContainer');
     let currentCue = null;
 
-    function openModal(cue){
+    // Device and browser capability detection
+    function canHandleRippleEffect() {
+      // Check for reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return false;
+      }
+
+      // Check for sufficient performance capabilities
+      const hasModernBrowser = 'CSS' in window && 'supports' in window.CSS;
+      const hasGoodPerformance = navigator.hardwareConcurrency >= 2 || navigator.deviceMemory >= 2;
+      const supportsAnimations = window.CSS && window.CSS.supports('animation', 'rippleExpand 2.5s ease-out');
+
+      return hasModernBrowser && (hasGoodPerformance || supportsAnimations !== false);
+    }
+
+    // Create new ripple elements for animation
+    function createRippleElements() {
+      rippleContainer.innerHTML = '';
+      for (let i = 0; i < 3; i++) {
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple';
+        rippleContainer.appendChild(ripple);
+      }
+    }
+
+    // Trigger golden ripple effect
+    function showRippleEffect() {
+      if (!canHandleRippleEffect()) {
+        return Promise.resolve(); // Skip ripple if device can't handle it
+      }
+
+      return new Promise(resolve => {
+        createRippleElements();
+        rippleContainer.classList.add('active');
+
+        // Hide ripple after animation completes
+        setTimeout(() => {
+          rippleContainer.classList.remove('active');
+          resolve();
+        }, 2800);
+      });
+    }
+
+    async function openModal(cue){
       currentCue = cue;
       cueInfo.textContent = `Pause at ${cue.toFixed(0)} seconds`;
       statusEl.textContent = "";
 
-      // Gentle fade-in animation
+      // Show ripple effect first, then modal
+      announce(`Taking a moment for feedback at ${cue.toFixed(0)} seconds`);
+      console.log("[demo] Showing golden ripple, then gently opening form at cue:", cue);
+
+      // Start ripple effect
+      await showRippleEffect();
+
+      // Then show modal with gentle fade-in
       modal.style.display = 'grid';
 
       // Small delay for smoother transition
       setTimeout(() => {
         modal.classList.add('show');
-      }, 50);
-
-      announce(`Taking a moment for feedback at ${cue.toFixed(0)} seconds`);
-      console.log("[demo] Gently showing form at cue:", cue);
+      }, 100);
     }
 
     function closeModal(){
@@ -598,7 +735,7 @@
       // Wait for animation to complete before hiding
       setTimeout(() => {
         modal.style.display = 'none';
-      }, 1400);
+      }, 2100);
     }
 
     document.getElementById('skipBtn').onclick = () => {
@@ -615,7 +752,7 @@
       };
       console.log("[demo] Submission (not sent):", data);
       statusEl.textContent = "Thank you for your thoughtful feedback. Resuming gently...";
-      setTimeout(() => { closeModal(); player.playVideo(); }, 1800);
+      setTimeout(() => { closeModal(); player.playVideo(); }, 2700);
     });
 
     function announce(msg){
