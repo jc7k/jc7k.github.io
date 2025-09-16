@@ -445,14 +445,26 @@
       transform: translateY(-1px);
     }
 
-    #skipBtn {
+    #skipBtn, #optOutBtn {
       background: #f8f9fa;
       color: #6c757d;
       border: 2px solid #e9ecef;
     }
 
-    #skipBtn:hover {
+    #skipBtn:hover, #optOutBtn:hover {
       background: #e9ecef;
+    }
+
+    #optOutBtn {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      color: white;
+      border: 2px solid #dc3545;
+      font-size: 0.9rem;
+    }
+
+    #optOutBtn:hover {
+      background: linear-gradient(135deg, #c82333, #a71e2a);
+      transform: translateY(-1px);
     }
 
     #toast {
@@ -512,6 +524,7 @@
 
       .button-group {
         flex-direction: column;
+        gap: 0.5rem;
       }
     }
 
@@ -608,6 +621,7 @@
         </div>
         <div class="button-group">
           <button type="button" id="skipBtn">Skip</button>
+          <button type="button" id="optOutBtn">No More Polls</button>
           <button type="submit">Submit Feedback</button>
         </div>
         <p id="status"></p>
@@ -630,13 +644,14 @@
   <!-- Config -->
   <script>
     const VIDEO_ID   = "JnBy7Af_2e0";  // Google Cloud: Intro to Generative AI
-    const CUES       = [5, 30];        // seconds
+    const CUES       = [5, 15, 25, 35, 45, 55];  // Every 10 seconds for testing
   </script>
 
   <!-- Controller (no backend) -->
   <script>
     let player, pollId=null, lastT=0;
     const triggered = new Set();
+    let userOptedOut = sessionStorage.getItem('pollOptOut') === 'true';
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-container', {
@@ -645,7 +660,12 @@
         events: { onReady, onStateChange }
       });
     }
-    function onReady() {}
+    function onReady() {
+      // Show opt-out status if user previously opted out
+      if (userOptedOut) {
+        announce("Feedback polls are disabled for this session");
+      }
+    }
     function onStateChange(e) {
       if (e.data === YT.PlayerState.PLAYING) startPolling();
       else stopPolling();
@@ -658,6 +678,13 @@
         for (const cue of CUES) {
           if (!triggered.has(cue) && crossed(lastT, t, cue, 0.5)) {
             triggered.add(cue);
+
+            // Respect user opt-out preference
+            if (userOptedOut) {
+              console.log(`[demo] Skipping poll at ${cue}s - user opted out`);
+              continue;
+            }
+
             player.pauseVideo();
             openModal(cue);
           }
@@ -755,6 +782,21 @@
 
     document.getElementById('skipBtn').onclick = () => {
       closeModal(); player.playVideo();
+    };
+
+    document.getElementById('optOutBtn').onclick = () => {
+      userOptedOut = true;
+      statusEl.textContent = "You'll no longer see feedback polls during this session. Thank you!";
+
+      // Store preference for this session
+      sessionStorage.setItem('pollOptOut', 'true');
+
+      announce("Feedback polls disabled for this session");
+
+      setTimeout(() => {
+        closeModal();
+        player.playVideo();
+      }, 2000);
     };
 
     form.addEventListener('submit', (e) => {
