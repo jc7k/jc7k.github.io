@@ -1,0 +1,581 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      line-height: 2;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 1rem 0 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, #d4af37, #f4d03f);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .logo {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+    }
+
+    .logo-text {
+      font-family: "Nunito", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #d4af37;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-family: "Nunito", sans-serif;
+      font-size: 2.2rem;
+      font-weight: 200;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+      letter-spacing: normal;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-family: "Nunito", sans-serif;
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 400;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: #ffffff;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+    }
+
+    .video-section {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+    }
+
+    .video-section .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .content-section {
+      padding: 4rem 0;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .content-text {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .content-text h2 {
+      font-family: "Nunito", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+      line-height: 1.25;
+    }
+
+    .content-text h2 strong {
+      font-weight: 700;
+    }
+
+    .content-text p {
+      font-family: "Nunito", sans-serif;
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+      line-height: 2;
+    }
+
+    .content-text em {
+      font-style: italic;
+      color: #d4af37;
+      font-weight: 500;
+    }
+
+    .video-container {
+      background: #000000;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                  0 0 0 2px rgba(212, 175, 55, 0.3);
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      position: relative;
+      max-width: 1000px;
+      width: 100%;
+      aspect-ratio: 16/9;
+      animation: videoGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes videoGlow {
+      0% {
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                    0 0 0 2px rgba(212, 175, 55, 0.3),
+                    0 0 30px rgba(212, 175, 55, 0.1);
+      }
+      100% {
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                    0 0 0 2px rgba(212, 175, 55, 0.5),
+                    0 0 60px rgba(212, 175, 55, 0.2);
+      }
+    }
+
+    .video-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #d4af37, #f4d03f, #d4af37);
+      z-index: 1;
+    }
+
+    #yt-container {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+    }
+
+    #yt-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+
+    /* Modal Styles */
+    #feedbackModal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
+      z-index: 9999;
+      opacity: 0;
+      transition: all 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    #feedbackModal.show {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+      opacity: 1;
+    }
+
+    .card {
+      background: white;
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 92%;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                  0 0 0 1px rgba(212, 175, 55, 0.4);
+      border: 2px solid #d4af37;
+      transform: scale(0.75) translateY(30px);
+      transition: all 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+      opacity: 0;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37, #f4d03f);
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0.6;
+      animation: cardBorderShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes cardBorderShimmer {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.9; }
+    }
+
+    /* Golden Ripple Effect */
+    .ripple-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .ripple-container.active {
+      opacity: 1;
+    }
+
+    .ripple {
+      position: absolute;
+      border: 0.5px solid rgba(212, 175, 55, 0.8);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleExpand 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 0 0 0.5px rgba(244, 208, 63, 0.3);
+    }
+
+    .ripple:nth-child(1) {
+      animation-delay: 0s;
+      border-color: rgba(212, 175, 55, 0.9);
+      border-width: 0.5px;
+    }
+
+    .ripple:nth-child(2) {
+      animation-delay: 0.3s;
+      border-color: rgba(244, 208, 63, 0.7);
+      border-width: 0.3px;
+    }
+
+    .ripple:nth-child(3) {
+      animation-delay: 0.6s;
+      border-color: rgba(212, 175, 55, 0.5);
+      border-width: 0.2px;
+    }
+
+    @keyframes rippleExpand {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+        border-width: 1px;
+      }
+      20% {
+        opacity: 0.8;
+        border-width: 0.8px;
+      }
+      50% {
+        opacity: 0.5;
+        border-width: 0.4px;
+      }
+      80% {
+        opacity: 0.2;
+        border-width: 0.2px;
+      }
+      100% {
+        transform: scale(150);
+        opacity: 0;
+        border-width: 0.1px;
+      }
+    }
+
+    /* Disable ripple on reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .ripple-container {
+        display: none;
+      }
+    }
+
+    #feedbackModal.show .card {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .card h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .row {
+      margin: 1.5rem 0;
+    }
+
+    label {
+      display: block;
+      color: #333;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      background: #ffffff;
+    }
+
+    select:focus, textarea:focus {
+      outline: none;
+      border-color: #1a1a1a;
+      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: white;
+      border: 1px solid #d4af37;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button[type="submit"]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    button[type="submit"]:hover::before {
+      left: 100%;
+    }
+
+    button[type="submit"]:hover {
+      background: linear-gradient(135deg, #b8941f, #d4af37);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    #skipBtn, #optOutBtn {
+      background: #ffffff;
+      color: #666;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #skipBtn::before, #optOutBtn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(244, 208, 63, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #skipBtn:hover, #optOutBtn:hover {
+      border-color: rgba(212, 175, 55, 0.6);
+      color: #d4af37;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+    }
+
+    #skipBtn:hover::before, #optOutBtn:hover::before {
+      opacity: 1;
+    }
+
+    #optOutBtn {
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.08));
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    #optOutBtn:hover {
+      border-color: rgba(212, 175, 55, 0.7);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(244, 208, 63, 0.12));
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a1a1a;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      display: none;
+      font-weight: 500;
+    }
+
+    #status {
+      color: #666;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    #cueInfo {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0.5rem 0 1.5rem;
+      font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+
+      .video-section {
+        padding: 1rem 0;
+        min-height: 50vh;
+      }
+
+      .video-container {
+        max-width: 98%;
+        margin: 0 auto;
+      }
+
+      #yt-container {
+        height: auto;
+      }
+
+      #yt-container iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        min-height: 250px;
+      }
+
+      .content-text {
+        padding: 0 1rem;
+      }
+
+      .content-text h2 {
+        font-size: 1.6rem;
+      }
+
+      .button-group {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0.75rem 0 1rem;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .logo-container {
+        margin-bottom: 0.5rem;
+      }
+
+      .video-section {
+        padding: 0.5rem 0;
+        min-height: 55vh;
+      }
+
+      .video-container {
+        max-width: 99%;
+      }
+
+      #yt-container iframe {
+        min-height: 280px;
+      }
+
+      .card {
+        padding: 1.5rem;
+        max-width: 95%;
+      }
+    }

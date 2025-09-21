@@ -5,923 +5,101 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>YouTube Feedback Demo (Frontend-only)</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #ffffff;
-      line-height: 2;
-      color: #333;
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    header {
-      background: #ffffff;
-      padding: 1rem 0 1.5rem;
-      text-align: center;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-      position: relative;
-    }
-
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, #d4af37, #f4d03f);
-    }
-
-    .logo-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .logo {
-      height: 40px;
-      width: auto;
-      filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
-    }
-
-    .logo-text {
-      font-family: "Nunito", sans-serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #d4af37;
-      letter-spacing: 0.5px;
-    }
-
-    h1 {
-      font-family: "Nunito", sans-serif;
-      font-size: 2.2rem;
-      font-weight: 200;
-      color: #1a1a1a;
-      margin-bottom: 0.5rem;
-      letter-spacing: normal;
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      font-family: "Nunito", sans-serif;
-      font-size: 0.9rem;
-      color: #666;
-      font-weight: 400;
-      max-width: 500px;
-      margin: 0 auto;
-      line-height: 1.5;
-    }
-
-    .badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #d4af37, #f4d03f);
-      color: #ffffff;
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1rem;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
-    }
-
-    .video-section {
-      padding: 4rem 0;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 60vh;
-    }
-
-    .video-section .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    .content-section {
-      padding: 4rem 0;
-      background: #ffffff;
-      text-align: center;
-    }
-
-    .content-text {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .content-text h2 {
-      font-family: "Nunito", sans-serif;
-      font-size: 1.8rem;
-      font-weight: 400;
-      color: #1a1a1a;
-      margin-bottom: 1.5rem;
-      line-height: 1.25;
-    }
-
-    .content-text h2 strong {
-      font-weight: 700;
-    }
-
-    .content-text p {
-      font-family: "Nunito", sans-serif;
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 1.5rem;
-      line-height: 2;
-    }
-
-    .content-text em {
-      font-style: italic;
-      color: #d4af37;
-      font-weight: 500;
-    }
-
-    .video-container {
-      background: #000000;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
-                  0 0 0 2px rgba(212, 175, 55, 0.3);
-      border: 2px solid rgba(212, 175, 55, 0.4);
-      position: relative;
-      max-width: 1000px;
-      width: 100%;
-      aspect-ratio: 16/9;
-      animation: videoGlow 3s ease-in-out infinite alternate;
-    }
-
-    @keyframes videoGlow {
-      0% {
-        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
-                    0 0 0 2px rgba(212, 175, 55, 0.3),
-                    0 0 30px rgba(212, 175, 55, 0.1);
-      }
-      100% {
-        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
-                    0 0 0 2px rgba(212, 175, 55, 0.5),
-                    0 0 60px rgba(212, 175, 55, 0.2);
-      }
-    }
-
-    .video-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #d4af37, #f4d03f, #d4af37);
-      z-index: 1;
-    }
-
-    #yt-container {
-      width: 100%;
-      aspect-ratio: 16/9;
-      position: relative;
-    }
-
-    #yt-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-
-    /* Modal Styles */
-    #feedbackModal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      place-items: center;
-      background: rgba(0, 0, 0, 0);
-      backdrop-filter: blur(0px);
-      z-index: 9999;
-      opacity: 0;
-      transition: all 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-
-    #feedbackModal.show {
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(12px);
-      opacity: 1;
-    }
-
-    .card {
-      background: white;
-      padding: 2.5rem;
-      max-width: 500px;
-      width: 92%;
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
-                  0 0 0 1px rgba(212, 175, 55, 0.4);
-      border: 2px solid #d4af37;
-      transform: scale(0.75) translateY(30px);
-      transition: all 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
-      opacity: 0;
-      position: relative;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37, #f4d03f);
-      border-radius: 14px;
-      z-index: -1;
-      opacity: 0.6;
-      animation: cardBorderShimmer 3s ease-in-out infinite;
-    }
-
-    @keyframes cardBorderShimmer {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 0.9; }
-    }
-
-    /* Golden Ripple Effect */
-    .ripple-container {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 20px;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .ripple-container.active {
-      opacity: 1;
-    }
-
-    .ripple {
-      position: absolute;
-      border: 0.5px solid rgba(212, 175, 55, 0.8);
-      border-radius: 50%;
-      transform: scale(0);
-      animation: rippleExpand 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      box-shadow: 0 0 0 0.5px rgba(244, 208, 63, 0.3);
-    }
-
-    .ripple:nth-child(1) {
-      animation-delay: 0s;
-      border-color: rgba(212, 175, 55, 0.9);
-      border-width: 0.5px;
-    }
-
-    .ripple:nth-child(2) {
-      animation-delay: 0.3s;
-      border-color: rgba(244, 208, 63, 0.7);
-      border-width: 0.3px;
-    }
-
-    .ripple:nth-child(3) {
-      animation-delay: 0.6s;
-      border-color: rgba(212, 175, 55, 0.5);
-      border-width: 0.2px;
-    }
-
-    @keyframes rippleExpand {
-      0% {
-        transform: scale(0);
-        opacity: 1;
-        border-width: 1px;
-      }
-      20% {
-        opacity: 0.8;
-        border-width: 0.8px;
-      }
-      50% {
-        opacity: 0.5;
-        border-width: 0.4px;
-      }
-      80% {
-        opacity: 0.2;
-        border-width: 0.2px;
-      }
-      100% {
-        transform: scale(150);
-        opacity: 0;
-        border-width: 0.1px;
-      }
-    }
-
-    /* Disable ripple on reduced motion preference */
-    @media (prefers-reduced-motion: reduce) {
-      .ripple-container {
-        display: none;
-      }
-    }
-
-    #feedbackModal.show .card {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-    }
-
-    .card h3 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 1rem;
-    }
-
-    .row {
-      margin: 1.5rem 0;
-    }
-
-    label {
-      display: block;
-      color: #333;
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-
-    select, textarea {
-      width: 100%;
-      padding: 1rem;
-      border: 2px solid #e9ecef;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: inherit;
-      transition: all 0.2s ease;
-      background: #ffffff;
-    }
-
-    select:focus, textarea:focus {
-      outline: none;
-      border-color: #1a1a1a;
-      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      margin-top: 2rem;
-    }
-
-    button {
-      cursor: pointer;
-      padding: 0.8rem 1.8rem;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: all 0.2s ease;
-    }
-
-    button[type="submit"] {
-      background: linear-gradient(135deg, #d4af37, #f4d03f);
-      color: white;
-      border: 1px solid #d4af37;
-      font-weight: 600;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button[type="submit"]::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.6s;
-    }
-
-    button[type="submit"]:hover::before {
-      left: 100%;
-    }
-
-    button[type="submit"]:hover {
-      background: linear-gradient(135deg, #b8941f, #d4af37);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
-    }
-
-    #skipBtn, #optOutBtn {
-      background: #ffffff;
-      color: #666;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    #skipBtn::before, #optOutBtn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(244, 208, 63, 0.05));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    #skipBtn:hover, #optOutBtn:hover {
-      border-color: rgba(212, 175, 55, 0.6);
-      color: #d4af37;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
-    }
-
-    #skipBtn:hover::before, #optOutBtn:hover::before {
-      opacity: 1;
-    }
-
-    #optOutBtn {
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.08));
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    #optOutBtn:hover {
-      border-color: rgba(212, 175, 55, 0.7);
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(244, 208, 63, 0.12));
-    }
-
-    #toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1a1a1a;
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      display: none;
-      font-weight: 500;
-    }
-
-    #status {
-      color: #666;
-      font-size: 0.95rem;
-      margin-top: 1rem;
-      font-style: italic;
-    }
-
-    #cueInfo {
-      color: #666;
-      font-size: 0.95rem;
-      margin: 0.5rem 0 1.5rem;
-      font-weight: 500;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-
-      h1 {
-        font-size: 1.8rem;
-      }
-
-      .subtitle {
-        font-size: 0.85rem;
-        line-height: 1.4;
-      }
-
-      .video-section {
-        padding: 1rem 0;
-        min-height: 50vh;
-      }
-
-      .video-container {
-        max-width: 98%;
-        margin: 0 auto;
-      }
-
-      #yt-container {
-        height: auto;
-      }
-
-      #yt-container iframe {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16/9;
-        min-height: 250px;
-      }
-
-      .content-text {
-        padding: 0 1rem;
-      }
-
-      .content-text h2 {
-        font-size: 1.6rem;
-      }
-
-      .button-group {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-        padding: 0.75rem 0 1rem;
-      }
-
-      h1 {
-        font-size: 1.6rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .logo-container {
-        margin-bottom: 0.5rem;
-      }
-
-      .video-section {
-        padding: 0.5rem 0;
-        min-height: 55vh;
-      }
-
-      .video-container {
-        max-width: 99%;
-      }
-
-      #yt-container iframe {
-        min-height: 280px;
-      }
-
-      .card {
-        padding: 1.5rem;
-        max-width: 95%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
     <div class="container">
       <div class="logo-container">
         <img src="https://goldtreeco.com/wp-content/uploads/2024/11/Minimal-Tree-of-Life-Illustrated-Logo-For-Organic-Spices-Brand.png"
-             alt="Gold Tree Business Consulting"
+             alt="Pulse Poll Logo"
              class="logo">
-        <span class="logo-text">GoldTreeCo</span>
+        <h1>Pulse Poll</h1>
       </div>
-      <h1>YouTube Feedback Demo</h1>
-      <p class="subtitle">
-        This proof of concept pauses every <strong>10 seconds</strong> starting at <strong>5s</strong> to show gentle feedback forms. Users can opt-out at any time.
-      </p>
+      <p class="subtitle">Real-time feedback from your community</p>
     </div>
   </header>
 
-  <section class="video-section">
-    <div class="container">
-      <div class="video-container">
-        <div id="yt-container"></div>
+  <main class="container">
+    <section class="poll-section">
+      <div class="poll-card">
+        <h2>How do you feel about our latest product update?</h2>
+        <p class="poll-description">Your feedback helps us improve our services and better serve our community.</p>
+
+        <form id="pollForm" class="poll-form">
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="feedback" value="love-it">
+              <span class="option-text">🚀 Love it!</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="feedback" value="good">
+              <span class="option-text">👍 Pretty good</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="feedback" value="okay">
+              <span class="option-text">😐 It's okay</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="feedback" value="needs-work">
+              <span class="option-text">👎 Needs work</span>
+            </label>
+          </div>
+
+          <div class="comment-section">
+            <label for="comment">Additional thoughts (optional):</label>
+            <textarea id="comment" name="comment" placeholder="Share your specific feedback or suggestions..."></textarea>
+          </div>
+
+          <!-- Honeypot field for bot detection -->
+          <input type="email" name="hp_email" style="position: absolute; left: -9999px;" tabindex="-1" autocomplete="off">
+
+          <button type="submit" class="submit-btn">Submit Feedback</button>
+        </form>
+
+        <div id="thankYou" class="thank-you" style="display: none;">
+          <div class="success-icon">✨</div>
+          <h3>Thank you for your feedback!</h3>
+          <p>Your input helps us create better experiences for everyone.</p>
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none;">
+          <div class="error-icon">⚠️</div>
+          <h3>Oops! Something went wrong</h3>
+          <p id="errorText">Please try again later.</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="content-section">
-    <div class="container">
-      <div class="content-text">
-        <h2><strong>Experience Thoughtful</strong> User Engagement</h2>
-        <p>
-          This demo showcases how we can <em>thoughtfully interrupt</em> video content at key moments
-          to gather meaningful feedback without disrupting the viewing experience.
-        </p>
-        <p>
-          The approach prioritizes <strong>user experience</strong> and <em>respectful timing</em>,
-          creating opportunities for engagement that feel natural and purposeful.
-        </p>
-        <p>
-          The video above demonstrates how gentle prompts can enhance rather than
-          interrupt the content consumption journey.
-        </p>
+    <section class="info-section">
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🔒 Privacy First</h3>
+          <p>Your responses are anonymous and securely processed. We use privacy-preserving techniques to protect your identity.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>⚡ Real-time Results</h3>
+          <p>See how your feedback compares with the community in real-time analytics and insights.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>🎯 Actionable Insights</h3>
+          <p>Your feedback directly influences our product roadmap and development priorities.</p>
+        </div>
       </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Pulse Poll. Building better products through community feedback.</p>
     </div>
-  </section>
+  </footer>
 
-
-  <!-- Modal -->
-  <div id="feedbackModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="card">
-      <h3 id="modal-title">Quick Pulse Check</h3>
-      <form id="pulseForm">
-        <p id="cueInfo"></p>
-        <div class="row">
-          <label>How helpful is this content so far?</label>
-          <select name="helpfulness" required>
-            <option value="">Please choose...</option>
-            <option>Very helpful</option>
-            <option>Somewhat helpful</option>
-            <option>Neutral</option>
-            <option>Not very helpful</option>
-            <option>Not helpful at all</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>One thing we could improve?</label>
-          <textarea name="comment" rows="3" placeholder="Your thoughtful feedback is appreciated (optional)"></textarea>
-        </div>
-        <div class="button-group">
-          <button type="button" id="skipBtn">Skip</button>
-          <button type="button" id="optOutBtn">No More Polls</button>
-          <button type="submit">Submit Feedback</button>
-        </div>
-        <p id="status"></p>
-      </form>
-    </div>
-  </div>
-
-  <div id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Golden Ripple Effect -->
-  <div class="ripple-container" id="rippleContainer">
-    <div class="ripple"></div>
-    <div class="ripple"></div>
-    <div class="ripple"></div>
-  </div>
-
-  <!-- YT API -->
-  <script>
-    // Prevent multiple API loads on reload
-    if (!window.YT && !window.onYouTubeIframeAPIReady) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-  </script>
-
-  <!-- Config -->
-  <script>
-    const VIDEO_ID   = "JnBy7Af_2e0";  // Google Cloud: Intro to Generative AI
-    const CUES       = [5, 15, 25, 35, 45, 55];  // Every 10 seconds for testing
-  </script>
-
-  <!-- Controller (no backend) -->
-  <script>
-    let player, pollId=null, lastT=0;
-    const triggered = new Set();
-    let userOptedOut = false;
-
-    // Initialize opt-out state safely
-    try {
-      const storedOptOut = sessionStorage.getItem('pollOptOut');
-      userOptedOut = storedOptOut === 'true';
-      console.log('[demo] Opt-out state initialized:', userOptedOut);
-    } catch (e) {
-      console.log('[demo] SessionStorage not available, opt-out state set to false');
-      userOptedOut = false;
-    }
-
-    function onYouTubeIframeAPIReady() {
-      console.log('[demo] YouTube API ready, initializing player...');
-      try {
-        // Clear any existing player
-        if (player && typeof player.destroy === 'function') {
-          player.destroy();
-        }
-
-        player = new YT.Player('yt-container', {
-          videoId: VIDEO_ID,
-          playerVars: {
-            rel: 0,
-            modestbranding: 1,
-            enablejsapi: 1,
-            origin: window.location.origin
-          },
-          events: {
-            onReady: onReady,
-            onStateChange: onStateChange,
-            onError: onPlayerError
-          }
-        });
-      } catch (error) {
-        console.error('[demo] Error initializing YouTube player:', error);
-        // Retry after a short delay
-        setTimeout(() => {
-          console.log('[demo] Retrying player initialization...');
-          onYouTubeIframeAPIReady();
-        }, 2000);
-      }
-    }
-
-    function onPlayerError(event) {
-      console.error('[demo] YouTube player error:', event.data);
-      // Handle common error codes
-      switch(event.data) {
-        case 2:
-          console.error('[demo] Invalid video ID');
-          break;
-        case 5:
-          console.error('[demo] HTML5 player error');
-          break;
-        case 100:
-          console.error('[demo] Video not found');
-          break;
-        case 101:
-        case 150:
-          console.error('[demo] Video not allowed to be played in embedded players');
-          break;
-      }
-    }
-    function onReady() {
-      console.log('[demo] YouTube player ready, opt-out status:', userOptedOut);
-      // Show opt-out status if user previously opted out
-      if (userOptedOut) {
-        announce("Feedback polls are disabled for this session");
-      }
-    }
-    function onStateChange(e) {
-      if (e.data === YT.PlayerState.PLAYING) startPolling();
-      else stopPolling();
-    }
-    function startPolling(){
-      if (pollId) return;
-      console.log('[demo] Starting polling, opt-out status:', userOptedOut);
-      lastT = player.getCurrentTime();
-      pollId = setInterval(() => {
-        const t = player.getCurrentTime();
-        for (const cue of CUES) {
-          if (!triggered.has(cue) && crossed(lastT, t, cue, 0.5)) {
-            triggered.add(cue);
-            console.log(`[demo] Cue triggered at ${cue}s, opt-out status:`, userOptedOut);
-
-            // Respect user opt-out preference
-            if (userOptedOut) {
-              console.log(`[demo] Skipping poll at ${cue}s - user opted out`);
-              continue;
-            }
-
-            console.log(`[demo] Showing poll at ${cue}s`);
-            player.pauseVideo();
-            openModal(cue);
-          }
-        }
-        lastT = t;
-      }, 300);
-    }
-    function stopPolling(){ clearInterval(pollId); pollId=null; }
-    function crossed(prev, now, cue, tol){
-      const a = Math.min(prev, now), b = Math.max(prev, now);
-      return (a - tol) < cue && cue <= (b + tol);
-    }
-
-    // Modal logic
-    const modal = document.getElementById('feedbackModal');
-    const form  = document.getElementById('pulseForm');
-    const statusEl = document.getElementById('status');
-    const cueInfo = document.getElementById('cueInfo');
-    const toast = document.getElementById('toast');
-    const rippleContainer = document.getElementById('rippleContainer');
-    let currentCue = null;
-
-    // Device and browser capability detection
-    function canHandleRippleEffect() {
-      // Check for reduced motion preference
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return false;
-      }
-
-      // Check for sufficient performance capabilities
-      const hasModernBrowser = 'CSS' in window && 'supports' in window.CSS;
-      const hasGoodPerformance = navigator.hardwareConcurrency >= 2 || navigator.deviceMemory >= 2;
-      const supportsAnimations = window.CSS && window.CSS.supports('animation', 'rippleExpand 2.5s ease-out');
-
-      return hasModernBrowser && (hasGoodPerformance || supportsAnimations !== false);
-    }
-
-    // Create new ripple elements for animation
-    function createRippleElements() {
-      rippleContainer.innerHTML = '';
-      for (let i = 0; i < 3; i++) {
-        const ripple = document.createElement('div');
-        ripple.className = 'ripple';
-        rippleContainer.appendChild(ripple);
-      }
-    }
-
-    // Trigger golden ripple effect
-    function showRippleEffect() {
-      if (!canHandleRippleEffect()) {
-        return Promise.resolve(); // Skip ripple if device can't handle it
-      }
-
-      return new Promise(resolve => {
-        createRippleElements();
-        rippleContainer.classList.add('active');
-
-        // Hide ripple after animation completes
-        setTimeout(() => {
-          rippleContainer.classList.remove('active');
-          resolve();
-        }, 2000);
-      });
-    }
-
-    async function openModal(cue){
-      currentCue = cue;
-      cueInfo.textContent = `Pause at ${cue.toFixed(0)} seconds`;
-      statusEl.textContent = "";
-
-      // Reset form to default state
-      form.reset();
-
-      // Show ripple effect first, then modal
-      announce(`Taking a moment for feedback at ${cue.toFixed(0)} seconds`);
-      console.log("[demo] Showing golden ripple, then gently opening form at cue:", cue);
-
-      // Start ripple effect
-      await showRippleEffect();
-
-      // Then show modal with gentle fade-in
-      modal.style.display = 'grid';
-
-      // Small delay for smoother transition
-      setTimeout(() => {
-        modal.classList.add('show');
-      }, 100);
-    }
-
-    function closeModal(){
-      modal.classList.remove('show');
-
-      // Wait for animation to complete before hiding (50% faster)
-      setTimeout(() => {
-        modal.style.display = 'none';
-      }, 1050);
-    }
-
-    document.getElementById('skipBtn').onclick = () => {
-      closeModal(); player.playVideo();
-    };
-
-    document.getElementById('optOutBtn').onclick = () => {
-      userOptedOut = true;
-      statusEl.textContent = "You'll no longer see feedback polls during this session. Thank you!";
-
-      // Store preference for this session
-      sessionStorage.setItem('pollOptOut', 'true');
-
-      announce("Feedback polls disabled for this session");
-
-      setTimeout(() => {
-        closeModal();
-        player.playVideo();
-      }, 2000);
-    };
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = {
-        video_id: VIDEO_ID,
-        at_seconds: currentCue,
-        helpfulness: form.helpfulness.value,
-        comment: form.comment.value || null,
-      };
-      console.log("[demo] Submission (not sent):", data);
-      statusEl.textContent = "Thank you for your thoughtful feedback. Resuming gently...";
-      setTimeout(() => { closeModal(); player.playVideo(); }, 2000);
-    });
-
-    function announce(msg){
-      toast.textContent = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 1500);
-    }
-  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
