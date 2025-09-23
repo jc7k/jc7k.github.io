@@ -1,9 +1,11 @@
 // Pulse Poll Frontend JavaScript
 
 // API Configuration
-const API_ENDPOINT = 'https://vid-poll-production.up.railway.app/api/polls/respond';  // Production
-// const API_ENDPOINT = 'http://localhost:8000/api/polls/respond';  // Development
-// const API_ENDPOINT = '/api/polls/respond';  // Production (same domain)
+const API_BASE_URL = 'https://vid-poll-production.up.railway.app';  // Production
+// const API_BASE_URL = 'http://localhost:8000';  // Development
+
+// Global poll configuration
+let pollConfig = null;
 
 // Form elements
 const pollForm = document.getElementById('pollForm');
@@ -30,6 +32,105 @@ function generateClientFingerprint() {
     return btoa(fingerprint).substring(0, 32);
 }
 
+// Get poll ID from URL parameters or default
+function getPollId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('poll') || 'demo-poll-2024';
+}
+
+// Load poll configuration from API
+async function loadPollConfig(pollId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/polls/${pollId}/config`);
+
+        if (response.ok) {
+            const config = await response.json();
+            pollConfig = config;
+            return config;
+        } else if (response.status === 404) {
+            throw new Error(`Poll '${pollId}' not found`);
+        } else {
+            throw new Error('Failed to load poll configuration');
+        }
+    } catch (error) {
+        console.error('Error loading poll config:', error);
+        throw error;
+    }
+}
+
+// Update page content with poll configuration
+function updatePageContent(config) {
+    // Update page title
+    document.title = `${config.title} - Pulse Poll`;
+
+    // Update poll question
+    const questionElement = document.querySelector('.poll-card h2');
+    if (questionElement) {
+        questionElement.textContent = config.title;
+    }
+
+    // Update description
+    const descriptionElement = document.querySelector('.poll-description');
+    if (descriptionElement) {
+        descriptionElement.textContent = config.description || 'Your feedback helps us improve our services.';
+    }
+
+    // Update poll options
+    const optionsContainer = document.querySelector('.options');
+    if (optionsContainer && config.valid_choices) {
+        optionsContainer.innerHTML = '';
+
+        // Create option labels based on valid choices
+        config.valid_choices.forEach((choice, index) => {
+            const label = document.createElement('label');
+            label.className = 'option';
+
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'feedback';
+            input.value = choice;
+
+            const span = document.createElement('span');
+            span.className = 'option-text';
+
+            // Use choice as display text (you could enhance this with a mapping)
+            const displayText = formatChoiceText(choice);
+            span.textContent = displayText;
+
+            label.appendChild(input);
+            label.appendChild(span);
+            optionsContainer.appendChild(label);
+        });
+    }
+
+    // Check if poll is active
+    if (!config.is_active) {
+        showError(`This poll is currently ${config.status}. Please check back later.`);
+        const submitBtn = document.querySelector('.submit-btn');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Poll Inactive';
+        }
+    }
+}
+
+// Format choice text for display (convert from API format to user-friendly)
+function formatChoiceText(choice) {
+    const choiceMap = {
+        'love-it': '🚀 Love it!',
+        'good': '👍 Pretty good',
+        'okay': '😐 It\'s okay',
+        'needs-work': '👎 Needs work',
+        'excellent': '⭐ Excellent',
+        'very-good': '👍 Very good',
+        'good': '✅ Good',
+        'fair': '😐 Fair',
+        'poor': '👎 Poor'
+    };
+
+    return choiceMap[choice] || choice.charAt(0).toUpperCase() + choice.slice(1).replace(/-/g, ' ');
+}
+
 // Show success message
 function showSuccess() {
     pollForm.style.display = 'none';
@@ -47,7 +148,7 @@ function showError(message) {
 // Submit poll response
 async function submitPollResponse(formData) {
     const payload = {
-        poll_id: 'demo-poll-2024',
+        poll_id: pollConfig ? pollConfig.poll_id : getPollId(),
         choice: formData.get('feedback'),
         comment: formData.get('comment') || null,
         client_fingerprint: generateClientFingerprint(),
@@ -55,7 +156,7 @@ async function submitPollResponse(formData) {
     };
 
     try {
-        const response = await fetch(API_ENDPOINT, {
+        const response = await fetch(`${API_BASE_URL}/api/polls/respond`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -113,29 +214,64 @@ pollForm.addEventListener('submit', async (e) => {
     }
 });
 
-// Add smooth scrolling and enhanced UX
-document.addEventListener('DOMContentLoaded', () => {
-    // Add animation classes after page load
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 100);
+// Initialize poll configuration and page content
+document.addEventListener('DOMContentLoaded', async () => {
+    // Get poll ID from URL
+    const pollId = getPollId();
 
-    // Add hover effects to option labels
-    const options = document.querySelectorAll('.option');
-    options.forEach(option => {
-        option.addEventListener('mouseenter', () => {
-            option.style.transform = 'translateY(-2px)';
+    try {
+        // Load poll configuration
+        console.log(`Loading poll configuration for: ${pollId}`);
+        const config = await loadPollConfig(pollId);
+        console.log('Poll config loaded:', config);
+
+        // Update page content with poll config
+        updatePageContent(config);
+
+        // Add animation classes after page load
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 100);
+
+        // Add hover effects to option labels (after dynamic creation)
+        setTimeout(() => {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('mouseenter', () => {
+                    option.style.transform = 'translateY(-2px)';
+                });
+
+                option.addEventListener('mouseleave', () => {
+                    option.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Auto-focus on first option for accessibility
+            const firstOption = document.querySelector('input[name="feedback"]');
+            if (firstOption) {
+                firstOption.focus();
+            }
+        }, 200);
+
+    } catch (error) {
+        console.error('Failed to load poll configuration:', error);
+        showError(`Failed to load poll configuration: ${error.message}. Using default poll.`);
+
+        // Fall back to hardcoded behavior
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 100);
+
+        const options = document.querySelectorAll('.option');
+        options.forEach(option => {
+            option.addEventListener('mouseenter', () => {
+                option.style.transform = 'translateY(-2px)';
+            });
+
+            option.addEventListener('mouseleave', () => {
+                option.style.transform = 'translateY(0)';
+            });
         });
-
-        option.addEventListener('mouseleave', () => {
-            option.style.transform = 'translateY(0)';
-        });
-    });
-
-    // Auto-focus on first option for accessibility
-    const firstOption = document.querySelector('input[name="feedback"]');
-    if (firstOption) {
-        firstOption.focus();
     }
 });
 
@@ -151,4 +287,4 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Console log for debugging
-console.log('Pulse Poll frontend loaded. API endpoint:', API_ENDPOINT);
+console.log('Pulse Poll frontend loaded. API base URL:', API_BASE_URL);
