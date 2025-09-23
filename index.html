@@ -824,11 +824,11 @@
       }).then(response => {
         console.log("[demo] Backend response:", response.status);
         statusEl.textContent = "Thank you for your thoughtful feedback. Resuming gently...";
-        setTimeout(() => { closeModal(); player.playVideo(); }, 2000);
+        setTimeout(() => { form.reset(); closeModal(); player.playVideo(); }, 2000);
       }).catch(error => {
         console.log("[demo] Backend unavailable, data logged locally:", data);
         statusEl.textContent = "Thank you for your thoughtful feedback. Resuming gently...";
-        setTimeout(() => { closeModal(); player.playVideo(); }, 2000);
+        setTimeout(() => { form.reset(); closeModal(); player.playVideo(); }, 2000);
       });
     });
 
