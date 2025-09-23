@@ -258,17 +258,24 @@ function initializeVideoPlayer() {
             playerContainer = document.getElementById('yt-container');
         }
 
-        // Initialize YouTube player
+        // Initialize YouTube player with simplified configuration
+        console.log('🎥 Creating YouTube player with video ID:', currentVideoId);
+
         player = new YT.Player(playerContainer, {
+            height: '390',
+            width: '640',
             videoId: currentVideoId,
             playerVars: {
-                ...window.VidPollConfig?.VIDEO_CONFIG?.YOUTUBE_PLAYER_VARS,
-                autoplay: getVideoPollingConfig().autoplay ? 1 : 0,
-                start: getVideoPollingConfig().startTime || 0
+                autoplay: 1,
+                rel: 0,
+                modestbranding: 1,
+                iv_load_policy: 3,
+                fs: 1
             },
             events: {
                 onReady: onPlayerReady,
-                onStateChange: onPlayerStateChange
+                onStateChange: onPlayerStateChange,
+                onError: onPlayerError
             }
         });
 
@@ -357,6 +364,49 @@ function onPlayerStateChange(event) {
 
     } catch (error) {
         console.error('❌ Error handling player state change:', error);
+    }
+}
+
+/**
+ * Handle YouTube player errors
+ */
+function onPlayerError(event) {
+    console.error('❌ YouTube player error:', event.data);
+
+    // Error code meanings:
+    // 2 - Invalid parameter
+    // 5 - HTML5 player error
+    // 100 - Video not found
+    // 101/150 - Video not allowed in embedded players
+
+    const errorMessages = {
+        2: 'Invalid video parameter',
+        5: 'HTML5 player error',
+        100: 'Video not found or has been removed',
+        101: 'Video cannot be played in embedded players',
+        150: 'Video cannot be played in embedded players'
+    };
+
+    const message = errorMessages[event.data] || `Unknown error (${event.data})`;
+    console.error(`❌ Video error: ${message}`);
+
+    // Try to load fallback video
+    if (event.data === 100 || event.data === 101 || event.data === 150) {
+        console.log('🔄 Attempting to load fallback video...');
+        loadFallbackVideo();
+    }
+}
+
+/**
+ * Load a fallback video when the primary video fails
+ */
+function loadFallbackVideo() {
+    const fallbackVideoId = 'dQw4w9WgXcQ'; // Rick Astley - Never Gonna Give You Up
+    console.log(`🔄 Loading fallback video: ${fallbackVideoId}`);
+
+    if (player && player.loadVideoById) {
+        player.loadVideoById(fallbackVideoId);
+        currentVideoId = fallbackVideoId;
     }
 }
 

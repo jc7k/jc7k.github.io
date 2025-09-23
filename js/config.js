@@ -7,7 +7,7 @@ const API_BASE_URL = 'https://vid-poll-production.up.railway.app';  // Productio
 // Video Configuration
 const VIDEO_CONFIG = {
     // Default video settings
-    DEFAULT_VIDEO_ID: 'JnBy7_Af_2e0',  // Google Cloud: Intro to Generative AI
+    DEFAULT_VIDEO_ID: 'M7lc1UVf-VE',  // YouTube Developers - Working with the YouTube Data API
     DEFAULT_POLL_ID: 'demo-poll-2024',
 
     // Timecode cue settings
