@@ -202,6 +202,8 @@
       width: 100%;
       aspect-ratio: 16/9;
       position: relative;
+      min-height: 200px;
+      background: #000;
     }
 
     #yt-container iframe {
@@ -653,10 +655,14 @@
     }
 
     function onYouTubeIframeAPIReady() {
+      // Get actual container dimensions for proper sizing
+      const container = document.getElementById('yt-container');
+      const rect = container.getBoundingClientRect();
+
       player = new YT.Player('yt-container', {
         videoId: VIDEO_ID,
-        width: '100%',
-        height: '100%',
+        width: rect.width || '100%',
+        height: rect.height || '100%',
         playerVars: { rel: 0, modestbranding: 1 },
         events: { onReady, onStateChange }
       });
@@ -840,6 +846,17 @@
       toast.style.display = 'block';
       setTimeout(() => { toast.style.display = 'none'; }, 1500);
     }
+
+    // Handle window resize to maintain video aspect ratio
+    window.addEventListener('resize', () => {
+      if (player && player.getIframe) {
+        const container = document.getElementById('yt-container');
+        const rect = container.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          player.setSize(rect.width, rect.height);
+        }
+      }
+    });
   </script>
 </body>
 </html>
