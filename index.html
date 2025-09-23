@@ -508,8 +508,12 @@
 
     /* Responsive Design */
     @media (min-width: 1200px) {
+      .container {
+        max-width: 95vw;  /* Allow container to be much larger on big screens */
+      }
+
       .video-container {
-        max-width: 80vw;  /* Use 80% of viewport on large screens */
+        max-width: 90vw;  /* Use 90% of viewport on large screens for better utilization */
       }
     }
 
