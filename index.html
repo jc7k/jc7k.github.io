@@ -118,10 +118,9 @@
     }
 
     .video-section .container {
-      max-width: 1400px;  /* Increased to match video container */
+      width: 100%;
       margin: 0 auto;
       padding: 0 2rem;
-      width: 100%;
     }
 
     .content-section {
@@ -170,9 +169,9 @@
                   0 0 0 2px rgba(212, 175, 55, 0.3);
       border: 2px solid rgba(212, 175, 55, 0.4);
       position: relative;
-      max-width: 1400px;  /* Increased from 1000px for larger video */
-      width: 90%;  /* Use 90% of available width */
-      margin: 0 auto;  /* Center the container */
+      width: 100%;
+      max-width: calc(100vw - 4rem);  /* Full viewport width minus padding */
+      margin: 0 auto;
       animation: videoGlow 3s ease-in-out infinite alternate;
     }
 
@@ -204,7 +203,6 @@
       width: 100%;
       aspect-ratio: 16/9;
       position: relative;
-      min-height: 200px;
       background: #000;
     }
 
@@ -509,9 +507,24 @@
     }
 
     /* Responsive Design */
+    @media (min-width: 1200px) {
+      .video-container {
+        max-width: 80vw;  /* Use 80% of viewport on large screens */
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 0 1.5rem;
+      }
+
+      .video-section .container {
+        padding: 0 1rem;  /* Less padding on mobile */
+      }
+
+      .video-container {
+        max-width: calc(100vw - 2rem);  /* Nearly full width on mobile */
+        border-radius: 12px;  /* Slightly smaller border radius */
       }
 
       h1 {
@@ -525,7 +538,6 @@
       .content-text h2 {
         font-size: 1.8rem;
       }
-
 
       .button-group {
         flex-direction: column;
