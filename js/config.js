@@ -1,13 +1,13 @@
 // Configuration Constants for Video-Poll Integration
 
-// API Configuration
-const API_BASE_URL = 'https://vid-poll-production.up.railway.app';  // Production
-// const API_BASE_URL = 'http://localhost:8000';  // Development (uncomment for local testing)
+// API Configuration - Use Railway backend for local testing
+const API_BASE_URL = 'https://vid-poll-production.up.railway.app';  // Production Railway backend
+// const API_BASE_URL = 'http://localhost:8000';  // Development (local testing)
 
 // Video Configuration
 const VIDEO_CONFIG = {
     // Default video settings
-    DEFAULT_VIDEO_ID: 'M7lc1UVf-VE',  // YouTube Developers - Working with the YouTube Data API
+    DEFAULT_VIDEO_ID: 'dQw4w9WgXcQ',  // Rick Astley - Never Gonna Give You Up (known working video)
     DEFAULT_POLL_ID: 'demo-poll-2024',
 
     // Timecode cue settings

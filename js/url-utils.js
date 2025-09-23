@@ -8,7 +8,7 @@ function getVideoPollingConfig() {
     const urlParams = new URLSearchParams(window.location.search);
 
     return {
-        videoId: urlParams.get('video') || 'JnBy7_Af_2e0', // Default video
+        videoId: urlParams.get('video') || 'dQw4w9WgXcQ', // Default video
         pollId: urlParams.get('poll') || 'demo-poll-2024', // Default poll
         autoplay: urlParams.get('autoplay') === 'true',
         startTime: parseInt(urlParams.get('t')) || 0 // Start time in seconds
@@ -30,7 +30,7 @@ function getPollId() {
  */
 function getVideoId() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('video') || 'JnBy7_Af_2e0';
+    return urlParams.get('video') || 'dQw4w9WgXcQ';
 }
 
 /**
@@ -119,7 +119,7 @@ function getValidatedVideoPollingConfig() {
     const config = getVideoPollingConfig();
 
     return {
-        videoId: isValidVideoId(config.videoId) ? config.videoId : 'JnBy7_Af_2e0',
+        videoId: isValidVideoId(config.videoId) ? config.videoId : 'dQw4w9WgXcQ',
         pollId: isValidPollId(config.pollId) ? config.pollId : 'demo-poll-2024',
         autoplay: config.autoplay,
         startTime: Math.max(0, config.startTime)

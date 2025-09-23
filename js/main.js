@@ -44,9 +44,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         initializeDOMElements();
 
         // Load YouTube API if not already loaded
+        console.log('🎬 Checking YouTube API status...');
         if (typeof YT === 'undefined') {
+            console.log('📦 Loading YouTube API...');
             await loadYouTubeAPI();
         } else {
+            console.log('✅ YouTube API already loaded, initializing player...');
             initializeVideoPlayer();
         }
 
@@ -260,6 +263,7 @@ function initializeVideoPlayer() {
 
         // Initialize YouTube player with simplified configuration
         console.log('🎥 Creating YouTube player with video ID:', currentVideoId);
+        console.log('🎥 Player container:', playerContainer);
 
         player = new YT.Player(playerContainer, {
             height: '390',
@@ -856,7 +860,15 @@ function showError(message) {
         return;
     }
 
-    // Fallback to alert or console
+    // Don't show alert for network-related errors, just log them
+    if (message.toLowerCase().includes('network') ||
+        message.toLowerCase().includes('connection') ||
+        message.toLowerCase().includes('initialization failed')) {
+        console.warn('Network issue detected, continuing with fallback mode');
+        return;
+    }
+
+    // Fallback to alert for critical errors only
     if (userPreferences?.getPreference('showAlerts', true)) {
         alert(message);
     }

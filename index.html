@@ -561,7 +561,18 @@
 
   <!-- Load configuration and utilities -->
   <script src="js/config.js"></script>
-  <script src="js/url-utils.js"></script>
+  <script>
+    // Make configuration available globally
+    window.VidPollConfig = {
+      API_BASE_URL,
+      VIDEO_CONFIG,
+      POLL_CONFIG,
+      UI_CONFIG,
+      ERROR_CONFIG,
+      DEBUG_CONFIG
+    };
+  </script>
+  <script src="js/url-utils.js?v=3"></script>
 
   <!-- Load core classes -->
   <script src="js/video-session.js"></script>
@@ -583,9 +594,6 @@
   <script src="js/tests/test-poll-modal.js"></script>
   <script src="js/tests/test-backend-api.js"></script>
   <script src="js/quickstart-validator.js"></script>
-
-  <!-- Load YouTube API -->
-  <script src="https://www.youtube.com/iframe_api" async></script>
 
   <!-- Main application controller -->
   <script src="js/main.js"></script>
