@@ -3,103 +3,623 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Pulse Poll - Real-time Feedback Collection</title>
+  <title>YouTube Feedback Integration - Video-Poll Demo</title>
+  <meta name="description" content="Interactive video polling system with YouTube integration for real-time feedback collection.">
+  <meta name="keywords" content="video polling, YouTube integration, feedback, interactive video">
+
+  <!-- Preconnect to required domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://www.youtube.com">
+  <link rel="preconnect" href="https://vid-poll-production.up.railway.app">
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 2rem 0 3rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, #d4af37, #f4d03f);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+    }
+
+    .logo-text {
+      font-family: "Nunito", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #B8860B;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-family: "Nunito", sans-serif;
+      font-size: 2.8rem;
+      font-weight: 200;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+      letter-spacing: normal;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      font-family: "Nunito", sans-serif;
+      font-size: 1rem;
+      color: #666;
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: #ffffff;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Video Section */
+    .video-section {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%);
+      position: relative;
+    }
+
+    .video-section .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16/9;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      animation: videoGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes videoGlow {
+      0% {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      }
+      100% {
+        box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2), 0 0 30px rgba(212, 175, 55, 0.1);
+      }
+    }
+
+    .video-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37, #f4d03f);
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0.3;
+      animation: borderShimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes borderShimmer {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    #yt-container {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-description {
+      text-align: center;
+      max-width: 700px;
+      color: #555;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
+      z-index: 9999;
+      opacity: 0;
+      transition: all 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    .modal.show {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 92%;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.4);
+      border: 2px solid #d4af37;
+      transform: scale(0.75) translateY(30px);
+      transition: all 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+      opacity: 0;
+      position: relative;
+    }
+
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37, #f4d03f);
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0.6;
+      animation: cardBorderShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes cardBorderShimmer {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.9; }
+    }
+
+    .modal.show .modal-content {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    /* Ripple Effect */
+    .ripple-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .ripple-container.active {
+      opacity: 1;
+    }
+
+    .ripple {
+      position: absolute;
+      border: 0.5px solid rgba(212, 175, 55, 0.8);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleExpand 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 0 0 0.5px rgba(244, 208, 63, 0.3);
+    }
+
+    @keyframes rippleExpand {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(50);
+        opacity: 0;
+      }
+    }
+
+    /* Form Styles */
+    .options {
+      display: grid;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #ffffff;
+    }
+
+    .option:hover {
+      border-color: #d4af37;
+      background: #fefdf8;
+      transform: translateY(-2px);
+    }
+
+    .option input[type="radio"] {
+      margin-right: 1rem;
+      accent-color: #d4af37;
+    }
+
+    .option-text {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .comment-section {
+      margin: 2rem 0;
+    }
+
+    .comment-section label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .comment-section textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      resize: vertical;
+      min-height: 100px;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+
+    .comment-section textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    .submit-btn, .secondary-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: white;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .secondary-btn {
+      background: #f8f9fa;
+      color: #666;
+      border: 2px solid #e0e0e0;
+    }
+
+    .secondary-btn:hover {
+      background: #e9ecef;
+    }
+
+    .opt-out-section {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .opt-out-option {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #666;
+      cursor: pointer;
+    }
+
+    .opt-out-option input[type="checkbox"] {
+      margin-right: 0.5rem;
+      accent-color: #d4af37;
+    }
+
+    .emergency-notice {
+      background: #fff3cd;
+      color: #856404;
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .success {
+      color: #155724;
+      background: #d4edda;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    .error {
+      color: #721c24;
+      background: #f8d7da;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #d4af37;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 1rem auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .video-section {
+        padding: 2rem 0;
+      }
+
+      .modal-content {
+        padding: 2rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .form-actions button {
+        width: 100%;
+      }
+    }
+
+    /* Reduced Motion Support */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .ripple-container {
+        display: none;
+      }
+    }
+
+    /* High Contrast Support */
+    @media (prefers-contrast: high) {
+      .option {
+        border-width: 3px;
+      }
+
+      .modal-content {
+        border-width: 3px;
+      }
+    }
+
+    /* Screen reader only content */
+    .sr-only {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    /* Focus indicators */
+    .option:focus-within,
+    .submit-btn:focus,
+    .secondary-btn:focus,
+    textarea:focus {
+      outline: 3px solid #d4af37;
+      outline-offset: 2px;
+    }
+  </style>
 </head>
+
 <body>
+  <div id="announcer" class="sr-only" aria-live="polite"></div>
+
   <header>
     <div class="container">
       <div class="logo-container">
         <img src="https://goldtreeco.com/wp-content/uploads/2024/11/Minimal-Tree-of-Life-Illustrated-Logo-For-Organic-Spices-Brand.png"
              alt="Pulse Poll Logo"
-             class="logo">
-        <h1>Pulse Poll</h1>
+             class="logo"
+             loading="lazy">
+        <div class="logo-text">Video Polls</div>
       </div>
-      <p class="subtitle">Real-time feedback from your community</p>
+      <h1>Interactive Video Feedback</h1>
+      <p class="subtitle">Experience dynamic polling during video playback</p>
+      <div class="badge">Live Demo</div>
     </div>
   </header>
 
-  <main class="container">
-    <section class="poll-section">
-      <div class="poll-card">
-        <h2>How do you feel about our latest product update?</h2>
-        <p class="poll-description">Your feedback helps us improve our services and better serve our community.</p>
-
-        <form id="pollForm" class="poll-form">
-          <div class="options">
-            <label class="option">
-              <input type="radio" name="feedback" value="love-it">
-              <span class="option-text">🚀 Love it!</span>
-            </label>
-
-            <label class="option">
-              <input type="radio" name="feedback" value="good">
-              <span class="option-text">👍 Pretty good</span>
-            </label>
-
-            <label class="option">
-              <input type="radio" name="feedback" value="okay">
-              <span class="option-text">😐 It's okay</span>
-            </label>
-
-            <label class="option">
-              <input type="radio" name="feedback" value="needs-work">
-              <span class="option-text">👎 Needs work</span>
-            </label>
-          </div>
-
-          <div class="comment-section">
-            <label for="comment">Additional thoughts (optional):</label>
-            <textarea id="comment" name="comment" placeholder="Share your specific feedback or suggestions..."></textarea>
-          </div>
-
-          <!-- Honeypot field for bot detection -->
-          <input type="email" name="hp_email" style="position: absolute; left: -9999px;" tabindex="-1" autocomplete="off">
-
-          <button type="submit" class="submit-btn">Submit Feedback</button>
-        </form>
-
-        <div id="thankYou" class="thank-you" style="display: none;">
-          <div class="success-icon">✨</div>
-          <h3>Thank you for your feedback!</h3>
-          <p>Your input helps us create better experiences for everyone.</p>
+  <main>
+    <section class="video-section">
+      <div class="container">
+        <div class="video-container">
+          <div id="yt-container" aria-label="Video player"></div>
         </div>
-
-        <div id="errorMessage" class="error-message" style="display: none;">
-          <div class="error-icon">⚠️</div>
-          <h3>Oops! Something went wrong</h3>
-          <p id="errorText">Please try again later.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="info-section">
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>🔒 Privacy First</h3>
-          <p>Your responses are anonymous and securely processed. We use privacy-preserving techniques to protect your identity.</p>
-        </div>
-
-        <div class="info-card">
-          <h3>⚡ Real-time Results</h3>
-          <p>See how your feedback compares with the community in real-time analytics and insights.</p>
-        </div>
-
-        <div class="info-card">
-          <h3>🎯 Actionable Insights</h3>
-          <p>Your feedback directly influences our product roadmap and development priorities.</p>
+        <div class="video-description">
+          <p>
+            This demo showcases how we can <em>thoughtfully interrupt</em> video content at key moments
+            to gather meaningful feedback without disrupting the viewing experience.
+          </p>
+          <p>
+            The video above demonstrates how gentle prompts can enhance rather than
+            distract from educational and promotional content.
+          </p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Pulse Poll. Building better products through community feedback.</p>
+  <!-- Modal for poll content -->
+  <div id="pollModal" class="modal" role="dialog" aria-labelledby="poll-title" aria-hidden="true">
+    <div class="modal-content">
+      <div id="pollContent">
+        <h2 id="poll-title">Loading poll...</h2>
+        <div class="loading-spinner"></div>
+      </div>
     </div>
-  </footer>
+  </div>
 
+  <!-- Ripple effect container -->
+  <div id="rippleContainer" class="ripple-container"></div>
+
+  <!-- Load configuration and utilities -->
+  <script src="js/config.js"></script>
+  <script src="js/url-utils.js"></script>
+
+  <!-- Load core classes -->
+  <script src="js/video-session.js"></script>
+  <script src="js/timecode-manager.js"></script>
+  <script src="js/timecode-cue.js"></script>
+  <script src="js/user-preferences.js"></script>
+  <script src="js/poll-cache.js"></script>
+  <script src="js/api-client.js"></script>
+
+  <!-- Load error handling and fallbacks -->
+  <script src="js/error-handlers.js"></script>
+  <script src="js/fallback-config.js"></script>
+
+  <!-- Load test validation -->
+  <script src="js/tests/test-video-session.js"></script>
+  <script src="js/tests/test-timecode-manager.js"></script>
+  <script src="js/tests/test-timecode-cue.js"></script>
+  <script src="js/tests/test-user-preferences.js"></script>
+  <script src="js/tests/test-poll-modal.js"></script>
+  <script src="js/tests/test-backend-api.js"></script>
+  <script src="js/quickstart-validator.js"></script>
+
+  <!-- Load YouTube API -->
+  <script src="https://www.youtube.com/iframe_api" async></script>
+
+  <!-- Main application controller -->
   <script src="js/main.js"></script>
+
+  <!-- Development utilities -->
+  <script>
+    // Development utilities for testing
+    if (window.VidPollConfig?.DEBUG_CONFIG?.CONSOLE_LOGGING) {
+      console.log('🎬 Video-Poll Integration loaded');
+      console.log('🔧 Available functions:', {
+        executeQuickstartValidation: typeof executeQuickstartValidation,
+        executeQuickstartScenario: typeof executeQuickstartScenario,
+        getQuickstartResults: typeof getQuickstartResults,
+        VidPollApp: typeof window.VidPollApp
+      });
+    }
+
+    // Auto-run contract tests in development
+    document.addEventListener('DOMContentLoaded', () => {
+      // Small delay to allow all scripts to initialize
+      setTimeout(() => {
+        if (window.VidPollConfig?.DEBUG_CONFIG?.LOG_LEVEL === 'debug') {
+          console.log('🧪 Auto-running contract validation tests...');
+
+          // Run contract tests for all classes
+          if (typeof runVideoSessionTests === 'function') runVideoSessionTests();
+          if (typeof runTimecodeManagerTests === 'function') runTimecodeManagerTests();
+          if (typeof runTimecodeCueTests === 'function') runTimecodeCueTests();
+          if (typeof runUserPreferencesTests === 'function') runUserPreferencesTests();
+          if (typeof runPollModalTests === 'function') runPollModalTests();
+          if (typeof runBackendAPITests === 'function') runBackendAPITests();
+        }
+      }, 3000);
+    });
+  </script>
 </body>
 </html>
