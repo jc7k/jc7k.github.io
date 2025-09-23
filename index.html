@@ -114,13 +114,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 60vh;
+      min-height: 70vh;  /* Increased from 60vh for better proportions */
     }
 
     .video-section .container {
-      max-width: 1200px;
+      max-width: 1400px;  /* Increased to match video container */
       margin: 0 auto;
       padding: 0 2rem;
+      width: 100%;
     }
 
     .content-section {
@@ -169,8 +170,9 @@
                   0 0 0 2px rgba(212, 175, 55, 0.3);
       border: 2px solid rgba(212, 175, 55, 0.4);
       position: relative;
-      max-width: 1000px;
-      width: 100%;
+      max-width: 1400px;  /* Increased from 1000px for larger video */
+      width: 90%;  /* Use 90% of available width */
+      margin: 0 auto;  /* Center the container */
       animation: videoGlow 3s ease-in-out infinite alternate;
     }
 
