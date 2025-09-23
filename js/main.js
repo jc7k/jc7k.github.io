@@ -509,12 +509,9 @@ function onResponseSubmitted(data) {
     console.log('✅ Poll response submitted successfully', data);
     showSuccessMessage();
 
-    // Auto-resume video after delay
+    // Auto-hide modal after delay (video will resume via hideModal)
     setTimeout(() => {
         hideModal();
-        if (player && player.playVideo) {
-            player.playVideo();
-        }
     }, window.VidPollConfig?.UI_CONFIG?.AUTO_RESUME_DELAY || 2000);
 }
 
@@ -556,7 +553,7 @@ async function showModal(cueData) {
 }
 
 /**
- * Hide modal
+ * Hide modal and resume video
  */
 function hideModal() {
     if (!modal) return;
@@ -566,6 +563,11 @@ function hideModal() {
     if (modalContent) {
         modalContent.style.transform = 'scale(0.75) translateY(30px)';
         modalContent.style.opacity = '0';
+    }
+
+    // Resume video immediately when modal closes
+    if (player && player.playVideo) {
+        player.playVideo();
     }
 
     setTimeout(() => {
@@ -644,7 +646,7 @@ async function loadPollContent(pollId) {
                 pollContent.innerHTML = `
                     <h2>Poll Unavailable</h2>
                     <p>Unable to load poll content. Please try again later.</p>
-                    <button onclick="hideModal(); if(player) player.playVideo();" class="submit-btn">
+                    <button onclick="hideModal();" class="submit-btn">
                         Continue Video
                     </button>
                 `;
@@ -684,7 +686,7 @@ function generatePollForm(pollConfig) {
                 <textarea id="comment" name="comment" placeholder="Share any additional thoughts..."></textarea>
             </div>
             <div class="form-actions">
-                <button type="button" onclick="hideModal(); if(player) player.playVideo();" class="secondary-btn">
+                <button type="button" onclick="hideModal();" class="secondary-btn">
                     Skip
                 </button>
                 <button type="submit" class="submit-btn">
@@ -900,9 +902,6 @@ function handleKeyboard(event) {
     // ESC to close modal
     if (event.key === 'Escape' && modal && modal.style.display !== 'none') {
         hideModal();
-        if (player && player.playVideo) {
-            player.playVideo();
-        }
         return;
     }
 
