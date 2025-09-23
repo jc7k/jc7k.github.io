@@ -334,7 +334,7 @@ class ErrorHandler {
      * @private
      */
     _getDefaultCues() {
-        const defaultTimestamps = window.VidPollConfig?.VIDEO_CONFIG?.DEFAULT_CUES || [15, 30, 45];
+        const defaultTimestamps = window.VidPollConfig?.VIDEO_CONFIG?.DEFAULT_CUES || [5, 15, 25, 35, 45, 55];
 
         return defaultTimestamps.map((timestamp, index) => ({
             id: `fallback-cue-${index}`,

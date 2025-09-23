@@ -99,7 +99,7 @@ class FallbackConfig {
         }
 
         // Default cues from configuration
-        const defaultCues = window.VidPollConfig?.VIDEO_CONFIG?.DEFAULT_CUES || [15, 30, 45, 60];
+        const defaultCues = window.VidPollConfig?.VIDEO_CONFIG?.DEFAULT_CUES || [5, 15, 25, 35, 45, 55];
 
         return defaultCues.map((timestamp, index) => ({
             id: `fallback-cue-${index}`,
