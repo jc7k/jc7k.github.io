@@ -1,9 +1,9 @@
 // Pulse Poll Frontend JavaScript
 
 // API Configuration
-const API_ENDPOINT = 'http://localhost:8000/api/polls/respond';  // Development
+const API_ENDPOINT = 'https://vid-poll-production.up.railway.app/api/polls/respond';  // Production
+// const API_ENDPOINT = 'http://localhost:8000/api/polls/respond';  // Development
 // const API_ENDPOINT = '/api/polls/respond';  // Production (same domain)
-// const API_ENDPOINT = 'https://your-backend.railway.app/api/polls/respond';  // Production (different domain)
 
 // Form elements
 const pollForm = document.getElementById('pollForm');
