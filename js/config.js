@@ -7,7 +7,7 @@ const API_BASE_URL = 'https://vid-poll-production.up.railway.app';  // Productio
 // Video Configuration
 const VIDEO_CONFIG = {
     // Default video settings
-    DEFAULT_VIDEO_ID: 'dQw4w9WgXcQ',  // Rick Astley - Never Gonna Give You Up (known working video)
+    DEFAULT_VIDEO_ID: 'f_N3PGvnVKg',  // User-requested video
     DEFAULT_POLL_ID: 'demo-poll-2024',
 
     // Timecode cue settings

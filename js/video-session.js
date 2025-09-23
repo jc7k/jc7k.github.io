@@ -239,12 +239,8 @@ class VideoSession {
         try {
             let result;
 
-            if (typeof submitPollResponse === 'function') {
-                result = await submitPollResponse(contextualResponse);
-            } else {
-                // Fallback submission method
-                result = await this._fallbackSubmission(contextualResponse);
-            }
+            // Use API client for submission
+            result = await this._fallbackSubmission(contextualResponse);
 
             if (this.options.debugMode) {
                 console.log('Poll response submitted successfully:', result);
